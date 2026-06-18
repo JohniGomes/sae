@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revisão SAE — Deficiências Nutricionais na Infância</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --emerald: #00c875;
+    --emerald2: #00c896;
+    --gold: #d4a843;
+    --gold2: #f0a500;
+    --surface: #0f1e38;
+    --surface2: #162340;
+    --border: rgba(0,200,117,0.25);
+    --text: #e8f0fe;
+    --muted: #8fa8c8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #0a1628 0%, #0f2a4a 50%, #0a1628 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 1.25rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,200,117,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,200,117,0.12);
+    border: 1px solid var(--border);
+    color: var(--emerald);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+  }
+  .hero h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .hero p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+  }
+  .hstat { text-align: center; }
+  .hstat-n { font-size: 1.3rem; font-weight: 700; color: var(--emerald); }
+  .hstat-l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── NAV TABS ── */
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 0.7rem 1.1rem;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab.active { color: var(--emerald); border-bottom-color: var(--emerald); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  /* ── CONTENT ── */
+  .content { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--emerald);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title span { font-size: 18px; }
+  .card p, .card li { font-size: 14px; color: var(--text); margin-bottom: 0.3rem; }
+  .card ul { padding-left: 1.2rem; }
+  .card li { margin-bottom: 0.2rem; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-green { background: rgba(0,200,117,0.15); color: var(--emerald); border: 1px solid rgba(0,200,117,0.3); }
+  .tag-gold { background: rgba(212,168,67,0.15); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
+  .tag-red { background: rgba(220,50,50,0.15); color: #ff6b6b; border: 1px solid rgba(220,50,50,0.3); }
+  .tag-blue { background: rgba(56,139,253,0.15); color: #79b8ff; border: 1px solid rgba(56,139,253,0.3); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 13px; margin: 0.5rem 0; }
+  .tbl th { background: rgba(0,200,117,0.1); color: var(--emerald); font-weight: 600; padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: none; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .alert {
+    border-left: 3px solid var(--emerald);
+    background: rgba(0,200,117,0.07);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.6rem 0;
+    font-size: 13px;
+    color: #cceedd;
+  }
+  .alert-gold {
+    border-left-color: var(--gold2);
+    background: rgba(240,165,0,0.07);
+    color: #ffe8a0;
+  }
+  .alert-red {
+    border-left-color: #ff6b6b;
+    background: rgba(220,50,50,0.07);
+    color: #ffc0c0;
+  }
+
+  /* ── QUESTIONS ── */
+  .q-counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+  }
+  .q-counter span { color: var(--muted); }
+  .q-counter strong { color: var(--emerald); font-size: 16px; }
+
+  .q-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 0.9rem;
+    transition: border-color 0.2s;
+  }
+  .q-block.answered { border-color: rgba(0,200,117,0.5); }
+  .q-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .q-text { font-size: 14px; color: var(--text); margin-bottom: 0.75rem; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 0.4rem; }
+  .q-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    text-align: left;
+    width: 100%;
+  }
+  .q-opt:hover { border-color: rgba(0,200,117,0.4); background: rgba(0,200,117,0.06); }
+  .q-opt.correct { border-color: var(--emerald); background: rgba(0,200,117,0.12); color: #cceedd; }
+  .q-opt.wrong { border-color: #ff6b6b; background: rgba(220,50,50,0.1); color: #ffc0c0; }
+  .q-opt .opt-letter { font-weight: 700; color: var(--muted); min-width: 16px; }
+  .q-opt.correct .opt-letter { color: var(--emerald); }
+  .q-opt.wrong .opt-letter { color: #ff6b6b; }
+  .q-feedback { font-size: 12px; margin-top: 0.6rem; padding: 0.5rem 0.75rem; border-radius: 6px; display: none; }
+  .q-feedback.show { display: block; }
+  .q-feedback.ok { background: rgba(0,200,117,0.1); color: var(--emerald); border: 1px solid rgba(0,200,117,0.25); }
+  .q-feedback.fail { background: rgba(220,50,50,0.1); color: #ff8888; border: 1px solid rgba(220,50,50,0.25); }
+
+  /* ── SCORE ── */
+  .score-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 8px; height: 8px; margin: 0.5rem 0; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--emerald), var(--gold2)); transition: width 0.4s; }
+
+  /* ── PROGRESS ── */
+  .prog { font-size: 12px; color: var(--muted); text-align: right; margin-top: 0.25rem; }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    display: block;
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 0.6rem;
+    background: rgba(0,200,117,0.08);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--emerald);
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1rem 0;
+  }
+
+  h3 { font-size: 15px; font-weight: 700; color: var(--gold2); margin: 0.9rem 0 0.5rem; }
+  h4 { font-size: 13px; font-weight: 700; color: var(--emerald2); margin: 0.6rem 0 0.3rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Revisão SAE · Enfermagem</div>
+  <h1>Deficiências Nutricionais<br>na Infância</h1>
+  <p>AIDIPI & CAB 33 · Ministério da Saúde / OMS</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">34</div><div class="hstat-l">Slides</div></div>
+    <div class="hstat"><div class="hstat-n">50</div><div class="hstat-l">Questões</div></div>
+    <div class="hstat"><div class="hstat-n" id="score-display">0</div><div class="hstat-l">Acertos</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('resumo',this)"> Resumo</button>
+  <button class="tab" onclick="showSection('diarreia',this)"> Diarreia</button>
+  <button class="tab" onclick="showSection('desnutricao',this)"> Desnutrição</button>
+  <button class="tab" onclick="showSection('micronut',this)"> Micronutrientes</button>
+  <button class="tab" onclick="showSection('saude',this)"> Saúde LGBT+</button>
+  <button class="tab" onclick="showSection('questoes',this)"> Questões</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ RESUMO GERAL -->
+<div id="resumo" class="content section active">
+
+  <div class="card">
+    <div class="card-title"><span></span>Contexto Epidemiológico</div>
+    <p>Taxa de mortalidade infantil nacional (2024): <strong style="color:var(--gold2)">12,6/mil NV</strong> — estagnada desde 2022 (recorde de 11,5 em 2020).</p>
+    <div class="divider"></div>
+    <table class="tbl">
+      <tr><th>Região</th><th>Taxa</th></tr>
+      <tr><td>Norte</td><td><span class="tag tag-red">15,7</span></td></tr>
+      <tr><td>Nordeste</td><td><span class="tag tag-red">13,5</span></td></tr>
+      <tr><td>Centro-Oeste</td><td><span class="tag tag-gold">12,6</span></td></tr>
+      <tr><td>Sudeste</td><td><span class="tag tag-blue">11,7</span></td></tr>
+      <tr><td>Sul</td><td><span class="tag tag-green">10,4</span></td></tr>
+    </table>
+    <div class="alert-red alert" style="margin-top:0.6rem">Mortalidade hospitalar por desnutrição grave permanece em ~20% no Brasil (meta OMS: &lt;5%).</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Fatores de Vulnerabilidade</div>
+    <h4>Raiz comum</h4>
+    <ul>
+      <li>Idade &lt; 5 anos (principalmente lactentes e prematuros)</li>
+      <li>Desnutrição e baixo peso ao nascer</li>
+      <li>Áreas sem saneamento / periferias urbanas</li>
+      <li>Moradias insalubres e aglomeração</li>
+      <li>Baixa escolaridade materna</li>
+    </ul>
+    <h4>Fatores ambientais</h4>
+    <ul>
+      <li>Má qualidade da água / manipulação incorreta de alimentos</li>
+      <li>Poluição atmosférica e doméstica</li>
+      <li>Tabagismo passivo no domicílio</li>
+      <li>Sazonalidade</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Escudo Integrado da Atenção Primária</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:0.6rem">As mesmas intervenções protegem contra diarreia e IRA simultaneamente:</p>
+    <ul>
+      <li><strong>1.</strong> Aleitamento materno exclusivo — imunidade passiva + nutrição ideal</li>
+      <li><strong>2.</strong> Saneamento e higiene — quebra da via orofecal e vetores respiratórios</li>
+      <li><strong>3.</strong> Vacinação ampla — Rotavírus, Pneumococo, Sarampo</li>
+      <li><strong>4.</strong> Combate à desnutrição — regeneração epitelial e competência imunológica</li>
+    </ul>
+  </div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ DIARREIA -->
+<div id="diarreia" class="content section">
+
+  <div class="card">
+    <div class="card-title"><span></span>Definição e Classificação</div>
+    <p>Alteração da função intestinal com perda excessiva de água e eletrólitos. Aumento de evacuações e/ou diminuição da consistência. Geralmente súbita e autolimitada.</p>
+    <div class="divider"></div>
+    <table class="tbl">
+      <tr><th>Tipo</th><th>Duração</th><th>Causa principal</th></tr>
+      <tr><td><span class="tag tag-green">Aguda</span></td><td>&lt; 14 dias</td><td>Infecciosa (Rotavírus, E. coli, Shigella)</td></tr>
+      <tr><td><span class="tag tag-gold">Persistente</span></td><td>≥ 14 dias</td><td>Infecção continuada + desnutrição</td></tr>
+      <tr><td><span class="tag tag-red">Crônica</span></td><td>&gt; 30 dias</td><td>Alergias, cólon irritável, enteropatia</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Fisiopatologia — 5 Mecanismos</div>
+    <table class="tbl">
+      <tr><th>Mecanismo</th><th>Resultado</th></tr>
+      <tr><td>Excesso de carboidratos/laxantes</td><td>Diarreia <strong>Osmolar</strong></td></tr>
+      <tr><td>Toxina (patógeno não invasivo)</td><td>Diarreia <strong>Secretora</strong></td></tr>
+      <tr><td>Toxina bacteriana — lesão da mucosa</td><td>Diarreia <strong>Disabsortiva</strong></td></tr>
+      <tr><td>Hipermotilidade intestinal</td><td>Diarreia <strong>Motora</strong></td></tr>
+      <tr><td>Agente invasivo — inflamação e úlceras</td><td>Diarreia <strong>Exsudativa (Disenteria)</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Perfil Clínico Diferencial — IMPORTANTE</div>
+    <table class="tbl">
+      <tr><th></th><th>Secretora (viral)</th><th>Exsudativa (disenteria)</th></tr>
+      <tr><td>Fezes</td><td>Líquidas, abundantes, claras</td><td>Amolecidas, pequenas porções</td></tr>
+      <tr><td>Sangue/Muco</td><td><span class="tag tag-green">Ausente</span></td><td><span class="tag tag-red">Presente</span></td></tr>
+      <tr><td>Dor</td><td>Desconforto leve</td><td>Dor intensa à evacuação</td></tr>
+      <tr><td>Assoc.</td><td>Vômitos + febre; casos familiares; ↑ linfócitos</td><td>Febre alta; leucocitose</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Matriz AIDPI — Classificação da Desidratação</div>
+    <table class="tbl">
+      <tr><th>Sinal</th><th>Plano A</th><th>Plano B</th><th>Plano C</th></tr>
+      <tr><td>Estado geral</td><td>Bem, alerta</td><td>Irritado</td><td><strong>Comatoso*</strong></td></tr>
+      <tr><td>Olhos</td><td>Normais</td><td>Fundos</td><td>Muito fundos*</td></tr>
+      <tr><td>Sede</td><td>Normal</td><td>Bebe avidamente</td><td>Não consegue beber*</td></tr>
+      <tr><td>Sinal da Prega</td><td>Rápido</td><td>&lt; 2s</td><td>&gt; 2s*</td></tr>
+      <tr><td>Diagnóstico</td><td><span class="tag tag-green">Sem desidratação</span></td><td><span class="tag tag-gold">Com desidratação</span> (2+ sinais)</td><td><span class="tag tag-red">Grave</span> (2+ incl. *)</td></tr>
+    </table>
+    <div class="alert" style="margin-top:0.6rem">Dois ou mais sinais, incluindo ao menos um com asterisco (*) = Desidratação GRAVE (Plano C).</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Planos de Tratamento</div>
+    <h4>Plano A — Domiciliar</h4>
+    <ul>
+      <li>SRO em casa após cada evacuação: &lt;1 ano: 50–100 ml; 1–10 anos: 100–200 ml; &gt;10 anos: à vontade</li>
+      <li>Zinco 1×/dia por 10–14 dias: <strong>&lt;6 meses = 10 mg/dia; ≥6 meses = 20 mg/dia</strong></li>
+      <li>Orientar sinais de alerta para retorno imediato</li>
+    </ul>
+    <h4>Plano B — Unidade Básica</h4>
+    <ul>
+      <li>SRO administrada na UBS até completa hidratação</li>
+      <li>Zinco 10 dias + orientação alimentar e retorno</li>
+    </ul>
+    <h4>Plano C — Urgência</h4>
+    <ul>
+      <li>Terapia EV imediata → referir URGENTEMENTE ao hospital</li>
+      <li>Oferecer goles de SRO no trajeto + continuar amamentação</li>
+    </ul>
+    <div class="alert-gold alert">Disenteria (sangue nas fezes): antibiótico para Shigella (se comprometimento do estado geral) + Zinco 10 dias.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Mecanismo de Ação do SRO (SGLT1)</div>
+    <p style="font-size:13px">A bomba Na⁺/K⁺-ATPase mantém o Na⁺ intracelular baixo → o cotransportador SGLT1 capta Na⁺ + glicose juntos da luz intestinal → a água acompanha por osmose → <strong style="color:var(--emerald)">reidratação</strong>.</p>
+  </div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ DESNUTRIÇÃO -->
+<div id="desnutricao" class="content section">
+
+  <div class="card">
+    <div class="card-title"><span></span>Triagem Antropométrica Universal</div>
+    <table class="tbl">
+      <tr><th>Escore Z</th><th>Classificação</th><th>Conduta</th></tr>
+      <tr><td><span class="tag tag-red">&lt; −3</span></td><td>Peso Muito Baixo / Desnutrição Grave</td><td>Intervenção imediata. Referir se sinais de perigo. Megadose Vit. A.</td></tr>
+      <tr><td><span class="tag tag-gold">−3 a −2</span></td><td>Peso Baixo</td><td>Avaliar alimentação. Retorno máx 15 dias. eMulti.</td></tr>
+      <tr><td><span class="tag tag-green">&gt; +2</span></td><td>Peso Elevado</td><td>Risco HAS/DM. Orientar dieta e ativ. física.</td></tr>
+    </table>
+    <div class="alert" style="margin-top:0.6rem">Sinais visíveis de alerta: palidez palmar, edema em ambos os pés, emagrecimento acentuado visível.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Espectro da Desnutrição Grave</div>
+    <table class="tbl">
+      <tr><th></th><th>Marasmo</th><th>Kwashiorkor</th><th>Kwashiorkor-Marasmático</th></tr>
+      <tr><td>Déficit</td><td>Calórico global</td><td>Proteico grave</td><td>Calórico + proteico</td></tr>
+      <tr><td>Idade</td><td>&lt; 1 ano</td><td>6m a 3 anos</td><td>1 a 2 anos</td></tr>
+      <tr><td>Edema</td><td>Não</td><td>Sim</td><td>Variável</td></tr>
+      <tr><td>Albumina</td><td>Normal</td><td>↓ (hipoalbuminemia)</td><td>Variável</td></tr>
+      <tr><td>Dermatose</td><td>Não</td><td>Sim</td><td>Variável</td></tr>
+      <tr><td>Hepatomegalia</td><td>Não</td><td>Sim</td><td>Variável</td></tr>
+    </table>
+    <div class="alert-red alert">Kwashiorkor-Marasmático = maior risco de mortalidade. O edema mascara a perda muscular.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Manejo Hospitalar da Desnutrição Grave</div>
+    <h4>Fase I — Estabilização (dias iniciais)</h4>
+    <ul>
+      <li>Tratar hipotermia (&lt;36,5°C), hipoglicemia (&lt;60 mg/dL)</li>
+      <li>Tratar desidratação e choque</li>
+      <li>Tratar infecções (isolamento profilático)</li>
+      <li>Tratar anemia muito grave (Hb &lt; 4 g/dL)</li>
+      <li>Iniciar alimentação cautelosamente</li>
+    </ul>
+    <h4>Fase II — Reabilitação</h4>
+    <ul>
+      <li>Alimentação intensiva (catch-up)</li>
+      <li>Correção de micronutrientes (Ferro)</li>
+      <li>Estimulação sensorial e emocional</li>
+    </ul>
+    <h4>Fase III — Acompanhamento</h4>
+    <ul>
+      <li>Alta: ganho &gt;5 g/kg/dia por 3 dias, sem edema</li>
+      <li>Retornos semanais até os 3 anos</li>
+    </ul>
+  </div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ MICRONUTRIENTES -->
+<div id="micronut" class="content section">
+
+  <div class="card">
+    <div class="card-title"><span></span>Vitamina A — Hipovitaminose</div>
+    <p>Essencial para rodopsina (visão noturna) e integridade da mucosa. Sem Vit. A, mucosas ressecam e o sistema imune falha → porta aberta para pneumonias e diarreias.</p>
+    <h4>Progressão da Xeroftalmia</h4>
+    <table class="tbl">
+      <tr><th>Estágio</th><th>Manifestação</th></tr>
+      <tr><td><span class="tag tag-green">1 — Funcional</span></td><td>Cegueira noturna (invisível a olho nu)</td></tr>
+      <tr><td><span class="tag tag-gold">2 — Estrutural leve</span></td><td>Xerose conjuntival (secura)</td></tr>
+      <tr><td><span class="tag tag-gold">3 — Moderado</span></td><td>Manchas de Bitot (placas queratina)</td></tr>
+      <tr><td><span class="tag tag-red">4 — Grave</span></td><td>Queratomalácia e ulceração → cegueira definitiva</td></tr>
+    </table>
+    <div class="alert-red alert">A deficiência agrava drasticamente a letalidade do sarampo e doenças respiratórias.</div>
+    <h4>Protocolo Nacional de Suplementação</h4>
+    <table class="tbl">
+      <tr><th>Faixa etária</th><th>Dose</th><th>Frequência</th></tr>
+      <tr><td>&lt; 6 meses</td><td>Apenas AME</td><td>—</td></tr>
+      <tr><td>6–11 meses</td><td>100.000 UI (cápsula amarela)</td><td>1 dose única</td></tr>
+      <tr><td>12–59 meses</td><td>200.000 UI (cápsula vermelha)</td><td>A cada 6 meses</td></tr>
+    </table>
+    <div class="alert">Via exclusivamente oral (diluída em óleo de soja + Vit. E). Nunca IM ou EV.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Anemia Ferropriva</div>
+    <p>Carência nutricional mais comum no mundo. Afeta ~50% das crianças &lt;4 anos. Janela crítica: <strong>6 a 24 meses</strong> (desenvolvimento neurológico).</p>
+    <p style="margin-top:0.4rem">Sinais: palidez palmar, glossite, fadiga, atraso neuromotor, perversão alimentar (pica).</p>
+    <h4>Classificação Laboratorial</h4>
+    <table class="tbl">
+      <tr><th>Hb</th><th>Conduta</th></tr>
+      <tr><td><span class="tag tag-green">≥ 11 g/dL</span></td><td>Normal</td></tr>
+      <tr><td><span class="tag tag-gold">5,0–10,9 g/dL</span></td><td>Iniciar tratamento Fe VO</td></tr>
+      <tr><td><span class="tag tag-red">&lt; 5,0 g/dL</span></td><td>Anemia grave — referir urgência</td></tr>
+    </table>
+    <h4>Suplementação Profilática de Ferro</h4>
+    <table class="tbl">
+      <tr><th>Situação</th><th>Dose</th></tr>
+      <tr><td>RN a Termo (peso adequado)</td><td>1 mg/kg/dia (6m–24m)</td></tr>
+      <tr><td>Pré-termo 1.500–2.500g</td><td>2 mg/kg/dia (1º ano) → 1 mg (2º ano)</td></tr>
+      <tr><td>Pré-termo 1.000–1.500g</td><td>3 mg/kg/dia (1º ano) → 1 mg (2º ano)</td></tr>
+      <tr><td>Pré-termo Extremo &lt;1.000g</td><td>4 mg/kg/dia (1º ano)</td></tr>
+    </table>
+    <div class="alert-gold alert">Leite de vaca precoce = fator primário de anemia. Alto cálcio inibe absorção de ferro + micro-hemorragias no TGI imaturo.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Zinco — Funcionalidades</div>
+    <ul>
+      <li>Crescimento infantil: multiplicação celular e síntese proteica</li>
+      <li>Imunidade: linfócitos T e defensas imunes</li>
+      <li>Função intestinal: absorção de água e eletrólitos</li>
+      <li>Reparo e cicatrização: pele e mucosas íntegras</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Teia Metabólica — Interações</div>
+    <div class="alert">Ferro é co-fator na conversão de β-caroteno em Vitamina A ativa. Sem Ferro = Sem Vitamina A.</div>
+    <div class="alert" style="margin-top:0.4rem">Vitamina A facilita absorção intestinal do Ferro não-heme. Sem Vit. A = Menos Ferro.</div>
+    <div class="alert" style="margin-top:0.4rem">Proteínas necessárias para criar RBP (proteína ligadora de retinol) e transferrina.</div>
+    <p style="font-size:13px; color:var(--muted); margin-top:0.5rem"><strong>Central Insight:</strong> As deficiências nunca operam isoladas. O tratamento exige olhar holístico: dieta + suplementação + contexto social.</p>
+  </div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SAÚDE LGBT+ -->
+<div id="saude" class="content section">
+
+  <div class="card">
+    <div class="card-title"><span></span>Arquitetura da Identidade</div>
+    <table class="tbl">
+      <tr><th>Dimensão</th><th>Definição</th></tr>
+      <tr><td>Sexo Biológico</td><td>Base anatômica e genética de nascimento (Macho, Fêmea, Intersexo)</td></tr>
+      <tr><td>Identidade de Gênero</td><td>Vivência interna e psíquica (Cisgênero, Transgênero)</td></tr>
+      <tr><td>Expressão de Gênero</td><td>Apresentação estética e social (Masculina, Feminina, Andrógina, Não-binária)</td></tr>
+      <tr><td>Orientação Sexual</td><td>Vetor do desejo e atração afetiva (Hetero, Homo, Bi, Pansexual)</td></tr>
+    </table>
+    <div class="alert">Separar e compreender estes quatro conceitos de forma independente é o primeiro passo clínico e empático para um acolhimento verdadeiramente humanizado.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Barreiras Sistêmicas (Iceberg)</div>
+    <h4>O Visível (expectativa do sistema)</h4>
+    <ul>
+      <li>Necessidades puramente biológicas</li>
+      <li>Busca burocrática por contracepção</li>
+      <li>Tratamento clínico de DSTs e dores psicossomáticas</li>
+    </ul>
+    <h4>As Barreiras Sistêmicas — IMPORTANTE</h4>
+    <ul>
+      <li>Homofobia e transfobia institucionalizadas no primeiro contato</li>
+      <li>Profissionais impondo valores morais e crenças religiosas sobre o corpo do paciente</li>
+      <li>Negação violenta do uso do nome social na recepção da Atenção Básica</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Jornada do Paciente — IMPORTANTE (Projeto Terapêutico)</div>
+    <table class="tbl">
+      <tr><th>Etapa</th><th>Descrição</th></tr>
+      <tr><td>1. A Chegada</td><td>Demanda espontânea ou encaminhamento formal (Conselho Tutelar, Escolas)</td></tr>
+      <tr><td>2. Triagem (Escuta Qualificada)</td><td>Profissional nível superior. Mapeamento crítico de urgências e classificação de risco imediato</td></tr>
+      <tr><td>3. Grupos de Observação Simultâneos</td><td>Adolescentes em grupo supervisionado; pais/responsáveis em sala paralela</td></tr>
+      <tr><td>4. Encaminhamento Terapêutico Singular</td><td>Plano de cuidado conjunto: consultas, grupos LGBT, terapias familiares, intervenções emergenciais</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span></span>Síntese — Equidade no SUS</div>
+    <ul>
+      <li>Escuta neutra e sem julgamento moral</li>
+      <li>Respeito genuíno à interseccionalidade</li>
+      <li>Autonomia garantida (sigilo e privacidade)</li>
+      <li>Intersetorialidade ativa (Saúde + Educação + Social)</li>
+    </ul>
+    <div class="alert" style="margin-top:0.6rem">Equidade para adolescentes não é apenas prescrever tratamentos e curar doenças; é fornecer a engrenagem e a rede de segurança para o desenvolvimento integral do sujeito.</div>
+  </div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ QUESTÕES -->
+<div id="questoes" class="content section">
+
+  <div class="q-counter">
+    <span>Progresso</span>
+    <div style="flex:1; margin: 0 1rem;">
+      <div class="score-bar-wrap"><div class="score-bar" id="prog-bar" style="width:0%"></div></div>
+    </div>
+    <strong id="q-prog">0/50</strong>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
+<script>
+const questions = [
+  {q:"Qual a taxa nacional de mortalidade infantil do Brasil em 2024?",opts:["10,4/mil NV","11,5/mil NV","12,6/mil NV","15,7/mil NV"],a:2,exp:"A taxa nacional em 2024 é 12,6/mil NV, estagnada desde 2022. O recorde histórico mais baixo foi 11,5 em 2020."},
+  {q:"A mortalidade infantil estagnada desde 2022 é explicada principalmente por:",opts:["Aumento de doenças crônicas","Falhas no acesso à atenção primária e condições de vida das populações mais vulneráveis","Excesso de vacinação","Excesso de antibióticos na infância"],a:1,exp:"O indicador sinaliza dificuldades do sistema de saúde em alcançar as crianças mais vulneráveis."},
+  {q:"Qual das seguintes NÃO é um fator de vulnerabilidade comum à diarreia e às IRAs?",opts:["Baixa escolaridade materna","Moradias insalubres","Excesso de peso materno","Desnutrição e baixo peso ao nascer"],a:2,exp:"O excesso de peso materno não está listado como fator de vulnerabilidade compartilhado entre diarreia e IRA no material."},
+  {q:"Segundo o protocolo AIDPI, a diarreia persistente dura:",opts:["Menos de 7 dias","De 7 a 13 dias","14 dias ou mais","Mais de 30 dias"],a:2,exp:"Persistente = ≥14 dias. Crônica = >30 dias."},
+  {q:"O mecanismo da diarreia secretora envolve:",opts:["Excesso de carboidratos não absorvidos","Toxina de patógeno não invasivo que ativa secreção de Cl⁻","Inflamação e úlceras na mucosa","Hipermotilidade intestinal"],a:1,exp:"Na diarreia secretora, a toxina ativa células aumentando a secreção de Cl⁻, arrastando água para o lúmen."},
+  {q:"Na diarreia exsudativa (disenteria), qual achado a DIFERENCIA da diarreia secretora?",opts:["Febre presente","Fezes líquidas e abundantes","Presença de sangue, muco ou pus nas fezes","Vômitos frequentes"],a:2,exp:"A presença de sangue/muco/pus é o sinal diferencial da disenteria (exsudativa), causada por agente invasivo."},
+  {q:"Pelo protocolo AIDPI 2017, a confirmação de desidratação ocorre quando a criança apresenta:",opts:["Qualquer sinal isolado","Dois ou mais sinais de desidratação","Apenas sinal da prega positivo","Apenas olhos fundos"],a:1,exp:"Dois ou mais sinais confirmam desidratação (Plano B). Dois ou mais incluindo ao menos um com asterisco = Plano C."},
+  {q:"Uma criança de 2 anos apresenta estado geral comatoso, olhos muito fundos, não consegue beber e sinal da prega que desaparece em >2s. Qual é o plano de tratamento?",opts:["Plano A — Domiciliar","Plano B — Unidade Básica","Plano C — Urgência","Nenhum plano; apenas observação"],a:2,exp:"Presença de sinais com asterisco (*) = Plano C (Desidratação Grave). Terapia EV imediata + referência urgente ao hospital."},
+  {q:"No Plano A de tratamento da diarreia, qual a dose de SRO recomendada para uma criança de 8 meses após cada evacuação?",opts:["10–30 ml","50–100 ml","100–200 ml","200–300 ml"],a:1,exp:"Para menores de 1 ano: 50–100 ml de SRO após cada evacuação diarreica."},
+  {q:"A suplementação de zinco no tratamento da diarreia deve ser administrada por:",opts:["5 dias","7 dias","10–14 dias","21 dias"],a:2,exp:"O zinco deve ser administrado por 10 a 14 dias, uma vez ao dia."},
+  {q:"Para uma criança de 3 anos com diarreia, a dose de zinco recomendada é:",opts:["5 mg/dia","10 mg/dia","20 mg/dia","30 mg/dia"],a:2,exp:"Maiores de 6 meses = 20 mg/dia. Menores de 6 meses = 10 mg/dia."},
+  {q:"O mecanismo de ação do SRO baseia-se em:",opts:["Inibição da secreção intestinal de Cl⁻","Cotransporte de Na⁺ + glicose via SGLT1, arrastando água por osmose","Aumento da motilidade intestinal","Ação antibacteriana direta"],a:1,exp:"O cotransportador SGLT1 capta Na⁺ e glicose juntos. A bomba Na/K-ATPase mantém o Na intracelular baixo, e a água acompanha por osmose."},
+  {q:"No manejo da disenteria (sangue nas fezes) com comprometimento do estado geral, qual antibiótico deve ser utilizado?",opts:["Amoxicilina","Metronidazol","Antibiótico recomendado para Shigella","Azitromicina para Rotavírus"],a:2,exp:"O protocolo indica antibiótico recomendado para Shigella + Zinco por 10 dias no caso de disenteria com comprometimento do estado geral."},
+  {q:"Qual das seguintes é causa de diarreia crônica (>30 dias)?",opts:["Rotavírus","Shigella","Enteropatia por glúten","Giardia lamblia aguda"],a:2,exp:"A enteropatia por glúten (doença celíaca), alergias alimentares e cólon irritável são causas de diarreia crônica."},
+  {q:"A 'cascata da complicação' da diarreia inclui, em ordem:",opts:["Desnutrição aguda → desidratação → danos crônicos","Desidratação aguda → desnutrição aguda → danos a longo prazo","Danos a longo prazo → desidratação → desnutrição","Desnutrição → danos → desidratação"],a:1,exp:"A sequência é: desidratação aguda (queda de água e eletrólitos) → desnutrição aguda (ciclo vicioso de inapetência) → danos a longo prazo (retardo no desenvolvimento)."},
+  {q:"A taxa de mortalidade hospitalar por desnutrição grave no Brasil está em torno de:",opts:["5%","10%","20%","35%"],a:2,exp:"~20%, muito acima da meta da OMS de <5%."},
+  {q:"O Escore Z < −3 em peso/idade indica:",opts:["Peso adequado","Peso baixo — retorno em 15 dias","Desnutrição grave — intervenção imediata","Obesidade infantil"],a:2,exp:"Escore Z < −3 = peso muito baixo / desnutrição grave → risco de morte, referir ao hospital se sinais de perigo, megadose de Vitamina A."},
+  {q:"Qual forma de desnutrição grave apresenta emagrecimento seco, sem edema, com albumina geralmente normal?",opts:["Kwashiorkor","Kwashiorkor-Marasmático","Marasmo","Desnutrição leve"],a:2,exp:"O Marasmo é o déficit calórico global, com emagrecimento seco, perda severa de músculo/gordura, sem edema e albumina geralmente normal. Comum em lactentes <1 ano."},
+  {q:"No Kwashiorkor, o edema é causado por:",opts:["Excesso de sódio na dieta","Hipoalbuminemia reduzindo a pressão oncótica plasmática","Insuficiência cardíaca congestiva","Obstrução linfática"],a:1,exp:"A deficiência proteica causa queda na produção hepática de albumina → redução da pressão oncótica → vazamento de líquido capilar para o interstício = edema visível."},
+  {q:"O Kwashiorkor-Marasmático é considerado de maior risco de mortalidade porque:",opts:["Apresenta febre alta","O edema mascara a perda muscular, dificultando o diagnóstico precoce","Tem albumina muito elevada","Ocorre apenas em prematuros"],a:1,exp:"A forma mista combina déficit calórico + proteico. O emagrecimento severo é mascarado pelo edema de extremidades, dificultando a percepção da família e o diagnóstico precoce."},
+  {q:"Na Fase I do manejo hospitalar da desnutrição grave, qual é o foco principal?",opts:["Catch-up nutricional","Estimulação sensorial e emocional","Risco de morte imediato — tratar hipotermia, hipoglicemia, desidratação e infecções","Prevenção de recaídas"],a:2,exp:"Fase I = estabilização. Foco no risco de morte imediato: hipotermia (<36,5°C), hipoglicemia (<60 mg/dL), desidratação e choque, infecções e anemia muito grave (Hb <4 g/dL)."},
+  {q:"O critério de alta hospitalar na desnutrição grave (Fase III) inclui:",opts:["Ausência de febre por 24h","Ganho >5 g/kg/dia por 3 dias consecutivos, sem edema","Albumina normalizada","Peso acima do percentil 50"],a:1,exp:"Alta: ganho >5g/kg/dia por 3 dias consecutivos, sem edema. Retornos semanais até os 3 anos de idade."},
+  {q:"A Vitamina A é essencial para a visão noturna pois compõe:",opts:["A melanina dos bastonetes","A rodopsina (bastonetes + retinal + opsina)","Os cones da retina","A mioglobina ocular"],a:1,exp:"Bastonetes + Retinal + Opsina = Rodopsina. Essencial para a detecção de luz e visão noturna."},
+  {q:"No estágio 4 da xeroftalmia, ocorre:",opts:["Apenas cegueira noturna","Manchas de Bitot","Xerose conjuntival","Queratomalácia e ulceração → cegueira definitiva"],a:3,exp:"Estágio 4 (Grave): necrose da córnea, levando a cicatrizes e cegueira definitiva. Irreversível."},
+  {q:"Para uma criança de 8 meses sem sinais de hipovitaminose A, qual o protocolo de suplementação de Vitamina A?",opts:["AME apenas","100.000 UI (cápsula amarela) — 1 dose única","200.000 UI (cápsula vermelha) — a cada 6 meses","Sem suplementação necessária"],a:1,exp:"Faixa 6–11 meses: 100.000 UI (cápsula amarela), 1 dose única."},
+  {q:"Para crianças de 12 a 59 meses, a suplementação de Vitamina A é:",opts:["100.000 UI a cada 3 meses","100.000 UI dose única","200.000 UI a cada 6 meses","200.000 UI dose única"],a:2,exp:"12–59 meses: 200.000 UI (cápsula vermelha) a cada 6 meses."},
+  {q:"A suplementação de Vitamina A deve ser administrada por qual via?",opts:["Intramuscular","Endovenosa","Oral exclusivamente (diluída em óleo de soja + Vit. E)","Subcutânea"],a:2,exp:"Via oral exclusivamente, diluída em óleo de soja + Vitamina E. Nunca IM ou EV."},
+  {q:"A anemia ferropriva afeta principalmente qual faixa etária como janela crítica?",opts:["0–6 meses","6–24 meses","2–5 anos","5–10 anos"],a:1,exp:"A janela crítica é 6 a 24 meses, período de maior desenvolvimento neurológico e vulnerabilidade ao déficit de ferro."},
+  {q:"Um RN pré-termo com peso entre 1.500g e 2.500g deve receber profilaxia com ferro:",opts:["1 mg/kg/dia do nascimento","2 mg/kg/dia no 1º ano → 1 mg/kg/dia no 2º ano","3 mg/kg/dia no 1º ano → 1 mg/kg/dia no 2º ano","4 mg/kg/dia durante o 1º ano"],a:1,exp:"RN pré-termo/baixo peso (1.500–2.500g): 2 mg/kg/dia durante o 1º ano, depois 1 mg/kg/dia no 2º ano."},
+  {q:"O ferro heme (origem animal) tem biodisponibilidade de:",opts:["5%","15%","25%","40%"],a:2,exp:"Ferro heme (carnes, fígado) = ~25% absorvido. Ferro não-heme (vegetal) = ~5% absorvido."},
+  {q:"Por que a introdução precoce de leite de vaca aumenta o risco de anemia?",opts:["Tem excesso de ferro que compete com outros nutrientes","Alto teor de cálcio inibe absorção de ferro + provoca micro-hemorragias no TGI imaturo","É rico em ácido fítico que bloqueia o ferro","Tem vitamina C em excesso que oxida o ferro"],a:1,exp:"Alta concentração de cálcio inibe a absorção de ferro E provoca micro-hemorragias no trato gastrointestinal imaturo do lactente."},
+  {q:"Hb de 4,5 g/dL em uma criança de 2 anos indica:",opts:["Normal","Anemia — iniciar Fe VO","Anemia grave — referir urgência","Policitemia — investigar"],a:1,exp:"Hb 5,0–10,9 g/dL = anemia → iniciar tratamento com Fe VO. Hb <5,0 g/dL = anemia grave = referir urgência."},
+  {q:"Qual vitamina atua como facilitadora, aumentando a absorção intestinal do ferro não-heme?",opts:["Vitamina D","Vitamina B12","Vitamina A","Vitamina K"],a:2,exp:"A Vitamina A é facilitadora da absorção intestinal do ferro não-heme. Sem Vit A = Menos Ferro."},
+  {q:"A proteína RBP (Proteína Ligadora de Retinol) é necessária para:",opts:["Armazenar ferro no fígado","Transportar a Vitamina A no plasma","Produzir linfócitos T","Sintetizar hemoglobina"],a:1,exp:"RBP transporta a Vitamina A ativa (retinol) pelo plasma. Sua produção depende de proteínas adequadas."},
+  {q:"A estratégia GAPP (OMS/Unicef) para prevenção da pneumonia inclui CINCO pilares. Qual NÃO faz parte?",opts:["Vacinação","Nutrição (AME + Zinco)","Uso rotineiro de antibióticos","Higiene das mãos"],a:2,exp:"Os 5 pilares do GAPP são: Vacinação, Nutrição, Ambiente, Prevenção Sistêmica (HIV) e Higiene. O uso rotineiro de antibióticos não é um pilar — ao contrário, o uso inadequado é um problema de saúde pública."},
+  {q:"Na avaliação clínica da IRA, a frequência respiratória deve ser contada:",opts:["Em 30 segundos e multiplicada por 2","Durante 1 minuto completo, com a criança afebril e tranquila, repetida 2× para confirmação","Durante 15 segundos e multiplicada por 4","Em qualquer momento, independente do estado da criança"],a:1,exp:"Protocolo: contar durante 1 minuto completo, criança afebril e tranquila, repetir por duas vezes para confirmação."},
+  {q:"Qual sinal de gravidade da IRA indica necessidade de avaliar uso de antitérmicos (6/6h) e limpeza nasal com NaCl 0,9%?",opts:["Coriza hialina isolada","Tosse produtiva","Dor torácica e sinais de esforço respiratório","Espirros isolados"],a:2,exp:"Sinais de gravidade da IRA incluem dor torácica (comum em pneumonia e asma), sinais de esforço respiratório, avaliar antitérmicos 6/6h e limpeza nasal com NaCl 0,9%."},
+  {q:"A coriza purulenta na IRA pode indicar:",opts:["Apenas rinite alérgica","Infecção viral em estágio inicial","Infecção viral contínua ou bacteriana","Sempre indicação de antibiótico"],a:2,exp:"Coriza purulenta: duração e quantidade indicam possível infecção viral contínua ou bacteriana. Não indica antibiótico automaticamente."},
+  {q:"Os quatro conceitos que compõem a arquitetura da identidade humana são:",opts:["Sexo, Gênero, Raça, Orientação","Sexo biológico, Identidade de Gênero, Expressão de Gênero, Orientação Sexual","Gênero, Orientação, Comportamento, Atração","Identidade, Comportamento, Fantasia, Atração"],a:1,exp:"Os quatro conceitos são: Sexo Biológico (anatômico/genético), Identidade de Gênero (vivência interna), Expressão de Gênero (apresentação social) e Orientação Sexual (vetor do desejo)."},
+  {q:"Na jornada do paciente LGBT+ no SUS, a etapa de 'Triagem (Escuta Qualificada)' é realizada por:",opts:["Qualquer servidor da recepção","Profissional de nível superior, com mapeamento crítico de urgências","Exclusivamente médico","Psicólogo — único autorizado"],a:1,exp:"A triagem com escuta qualificada é conduzida por profissional de nível superior, que realiza o mapeamento crítico de urgências e classificação de risco imediato (ex: ideação suicida)."},
+  {q:"A 'negação violenta do uso do nome social na recepção da Atenção Básica' é classificada como:",opts:["Conduta aceitável se solicitada por familiares","Barreira sistêmica oculta que impede o acesso ao cuidado","Norma administrativa necessária","Proteção da privacidade do paciente"],a:1,exp:"A negação do nome social é uma das barreiras sistêmicas ocultas identificadas no slide do 'iceberg', junto à homofobia institucionalizada e à imposição de valores morais pelos profissionais."},
+  {q:"O 'Encaminhamento Terapêutico Singular' (4ª etapa da jornada do paciente) envolve:",opts:["Alta imediata com receita","Criação conjunta do plano de cuidado: consultas, grupos de expressão criativa, terapias familiares","Apenas medicação","Encaminhamento exclusivo para psiquiatria"],a:1,exp:"O Projeto Terapêutico Singular é criado conjuntamente e inclui consultas médicas, entrada em grupos LGBT de expressão criativa, terapias familiares e intervenções emergenciais."},
+  {q:"A 'verdadeira equidade no SUS' para adolescentes envolve quatro pilares. Qual combinação está CORRETA?",opts:["Medicação, cirurgia, exames, internação","Escuta neutra, respeito à interseccionalidade, autonomia garantida (sigilo), intersetorialidade ativa","Prevenção, promoção, reabilitação, internação","Vacinação, saneamento, educação, renda"],a:1,exp:"Os quatro pilares são: Escuta neutra sem julgamento moral, Respeito genuíno à interseccionalidade, Autonomia garantida (sigilo e privacidade) e Intersetorialidade ativa (Saúde + Educação + Social)."},
+  {q:"Qual o principal patógeno causador de diarreia aguda em crianças, transmitido por via orofecal?",opts:["Shigella","Rotavírus","Giardia lamblia","Vibrio cholerae"],a:1,exp:"O Rotavírus é o mais comum causador de diarreia aguda em crianças, transmitido por via orofecal."},
+  {q:"Os 'Grupos de Observação Simultâneos' (3ª etapa) são caracterizados por:",opts:["Apenas adolescentes em grupo","Adolescentes interagem em grupo supervisionado enquanto pais relatam queixas em sala terapêutica paralela","Apenas pais em grupo","Médicos discutindo casos sem presença dos pacientes"],a:1,exp:"Os adolescentes interagem e expressam vivências em um grupo supervisionado, enquanto os pais/responsáveis relatam suas próprias queixas em uma sala terapêutica paralela."},
+  {q:"Marasmo é mais comum em qual faixa etária?",opts:["6 meses a 3 anos","1 a 2 anos","Lactentes menores de 1 ano","Crianças de 3 a 5 anos"],a:2,exp:"Marasmo acomete principalmente lactentes menores de 1 ano, com déficit calórico global."},
+  {q:"Qual das seguintes afirmativas sobre a Teia Metabólica está INCORRETA?",opts:["O Ferro é co-fator na conversão de β-caroteno em Vitamina A","A Vitamina A aumenta a absorção intestinal do Ferro não-heme","As deficiências nutricionais sempre operam de forma isolada","Proteínas são necessárias para criar RBP e transferrina"],a:2,exp:"INCORRETA: 'As deficiências nunca operam isoladas' é o central insight. A desnutrição proteico-calórica bloqueia o transporte e os micronutrientes dependem uns dos outros."},
+  {q:"No Plano C de tratamento da diarreia, qual conduta deve ser adotada DURANTE O TRAJETO ao hospital?",opts:["Administrar antibiótico VO","Suspender a amamentação","Oferecer goles frequentes de SRO e continuar amamentação","Dar antipirético e aguardar melhora"],a:2,exp:"Durante o trajeto ao hospital: se possível, administrar goles frequentes de SRO e continuar a amamentação."},
+  {q:"Qual sinal do exame físico AIDPI confirma desidratação quando presente junto a outros sinais?",opts:["Febre acima de 38°C","Sinal da Prega que desaparece lentamente (<2s para Plano B; >2s* para Plano C)","Frequência cardíaca acima de 100 bpm","Presença de coriza"],a:1,exp:"O Sinal da Prega é um dos sinais clínicos-chave do AIDPI para classificação da desidratação: desaparece rapidamente (Plano A), lentamente <2s (Plano B), muito lentamente >2s* (Plano C)."},
+  {q:"A deficiência de Vitamina A agrava a letalidade de qual doença infecciosa de forma particularmente significativa, segundo o material?",opts:["Dengue","Sarampo","Malária","Meningite"],a:1,exp:"A deficiência de Vitamina A agrava drasticamente a letalidade do sarampo e doenças respiratórias."},
+  {q:"O que é Pica no contexto da anemia ferropriva?",opts:["Tipo de anemia megaloblástica","Perversão alimentar — ingestão de substâncias não alimentares","Sinal de hemorragia ocular","Manchas brancas nas unhas"],a:1,exp:"Pica = perversão alimentar, ingestão de substâncias não nutritivas (terra, gelo, papel). É um sinal clínico da anemia ferropriva."}
+];
+
+let answered = 0;
+let correct = 0;
+
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Shuffle questions on every page load
+const questions_shuffled = shuffleArray(questions);
+
+function buildQuestions() {
+  const c = document.getElementById('questions-container');
+  questions_shuffled.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'q-' + i;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="q-num">Questão ${i+1} / 50</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="answer(${i},${j})" id="opt-${i}-${j}"><span class="opt-letter">${letters[j]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function answer(qi, oi) {
+  const q = questions_shuffled[qi];
+  const block = document.getElementById('q-' + qi);
+  if (block.classList.contains('answered')) return;
+  block.classList.add('answered');
+  answered++;
+
+  const opts = block.querySelectorAll('.q-opt');
+  opts.forEach((o, j) => {
+    o.style.pointerEvents = 'none';
+    if (j === q.a) o.classList.add('correct');
+    else if (j === oi && oi !== q.a) o.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb-' + qi);
+  if (oi === q.a) {
+    correct++;
+    fb.textContent = ' Correto! ' + q.exp;
+    fb.className = 'q-feedback show ok';
+  } else {
+    fb.textContent = ' Incorreto. ' + q.exp;
+    fb.className = 'q-feedback show fail';
+  }
+
+  document.getElementById('score-display').textContent = correct;
+  document.getElementById('q-prog').textContent = answered + '/50';
+  document.getElementById('prog-bar').style.width = Math.round((answered/50)*100) + '%';
+}
+
+function showSection(id, tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  tab.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
+
+buildQuestions();
+</script>
+</body>
+</html>
