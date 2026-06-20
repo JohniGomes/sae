@@ -285,6 +285,7 @@
   <button class="tab" onclick="showSection('desnutricao',this)"> Desnutrição</button>
   <button class="tab" onclick="showSection('micronut',this)"> Micronutrientes</button>
   <button class="tab" onclick="showSection('saude',this)"> Saúde LGBT+</button>
+  <button class="tab" onclick="showSection('infeccoes',this)"> Infecções</button>
   <button class="tab" onclick="showSection('questoes',this)"> Questões</button>
 </div>
 
@@ -597,6 +598,136 @@
   <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
 </div>
 
+<!-- ══════════════════════════════════════════════════════ INFECCOES -->
+<div id="infeccoes" class="content section">
+
+  <div class="card">
+    <div class="card-title">Malária</div>
+    <p>Doença causada por protozoário do gênero <em>Plasmodium</em>. Transmitida pela picada da fêmea do mosquito <em>Anopheles</em>.</p>
+    <table class="tbl">
+      <tr><th>Aspecto</th><th>Detalhe</th></tr>
+      <tr><td>Agente</td><td>Protozoário <em>Plasmodium</em></td></tr>
+      <tr><td>Vetor</td><td>Fêmea do <em>Anopheles</em></td></tr>
+      <tr><td>Sintomas</td><td>Febre intermitente, calafrios, suor intenso, dor de cabeça, náuseas</td></tr>
+      <tr><td>Diagnóstico</td><td>Gota espessa e esfregaço sanguíneo; testes rápidos</td></tr>
+      <tr><td>Tratamento</td><td>Antimaláricos conforme espécie e gravidade</td></tr>
+      <tr><td>Incubação</td><td>7 a 30 dias</td></tr>
+    </table>
+    <div class="alert">Não transmitida por contato direto entre pessoas. Graves: anemia, convulsões e alterações de consciência.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Leishmaniose</div>
+    <table class="tbl">
+      <tr><th>Tipo</th><th>Manifestação</th></tr>
+      <tr><td>Cutânea</td><td>Úlceras indolores de difícil cicatrização, lesões em mucosas</td></tr>
+      <tr><td>Visceral (Calazar)</td><td>Febre prolongada, perda de peso, hepatoesplenomegalia, anemia</td></tr>
+    </table>
+    <div class="alert-gold alert">Transmitida pela picada do mosquito-palha (<em>Lutzomyia</em>). A leishmaniose visceral pode ser fatal se não tratada. Cães infectados são reservatórios importantes.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Hepatites Virais</div>
+    <table class="tbl">
+      <tr><th>Hepatite</th><th>Transmissão</th><th>Vacina</th><th>Cronifica?</th></tr>
+      <tr><td><span class="tag tag-blue">A</span></td><td>Fecal-oral (água/alimentos)</td><td>Sim</td><td>Não</td></tr>
+      <tr><td><span class="tag tag-gold">B</span></td><td>Sexual, sanguínea, vertical</td><td>Sim</td><td>Sim</td></tr>
+      <tr><td><span class="tag tag-red">C</span></td><td>Sanguínea (principal)</td><td>Não</td><td>Sim (freq.)</td></tr>
+      <tr><td><span class="tag tag-red">D</span></td><td>Só em quem tem HBV</td><td>Vac. B protege</td><td>Sim</td></tr>
+      <tr><td><span class="tag tag-blue">E</span></td><td>Fecal-oral (água)</td><td>Não (BR)</td><td>Não</td></tr>
+    </table>
+    <div class="alert">Macete: A e E = Água/Alimento. B, C e D = Blood/Sangue. D depende do B. C tem cura mas não tem vacina.</div>
+    <h4>Marcadores Sorológicos HBV</h4>
+    <table class="tbl">
+      <tr><th>Situação</th><th>HBsAg</th><th>Anti-HBc</th><th>Anti-HBs</th></tr>
+      <tr><td>Vacinado/Protegido</td><td>Neg</td><td>Neg</td><td><span class="tag tag-green">Pos</span></td></tr>
+      <tr><td>Infecção ativa</td><td><span class="tag tag-red">Pos</span></td><td>Pos</td><td>Neg</td></tr>
+      <tr><td>Cura/imunidade natural</td><td>Neg</td><td>Pos</td><td><span class="tag tag-green">Pos</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Arboviroses — Dengue, Zika, Chikungunya</div>
+    <table class="tbl">
+      <tr><th></th><th>Dengue</th><th>Zika</th><th>Chikungunya</th></tr>
+      <tr><td>Vetor</td><td><em>Aedes aegypti</em></td><td><em>Aedes aegypti</em></td><td><em>Aedes aegypti/albopictus</em></td></tr>
+      <tr><td>Febre</td><td>Alta (39–40°C)</td><td>Baixa ou ausente</td><td>Alta (&gt;39°C)</td></tr>
+      <tr><td>Característica</td><td>Dor intensa ("quebra-ossos")</td><td>Exantema + coceira + conjuntivite</td><td>Artralgia intensa incapacitante</td></tr>
+      <tr><td>Complicação</td><td>Dengue grave, hemorragia</td><td>Microcefalia, Guillain-Barré</td><td>Artralgia crônica (meses/anos)</td></tr>
+      <tr><td>Transmissão sexual</td><td>Não</td><td>Sim</td><td>Não</td></tr>
+    </table>
+    <div class="alert-red alert">AAS é contraindicado na dengue — aumenta risco de sangramento. Preferir paracetamol ou dipirona.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">HIV/AIDS</div>
+    <p>Agente: Vírus HIV, que ataca os linfócitos T CD4. AIDS é a fase avançada com doenças oportunistas.</p>
+    <table class="tbl">
+      <tr><th>Fase</th><th>Características</th></tr>
+      <tr><td>Aguda (2–4 sem.)</td><td>Febre, dor de garganta, ínguas, manchas na pele</td></tr>
+      <tr><td>Assintomática</td><td>Pode durar anos sem sintomas</td></tr>
+      <tr><td>AIDS</td><td>CD4 baixo, doenças oportunistas (TB, candidíase, Pneumocystis, toxoplasmose)</td></tr>
+    </table>
+    <div class="alert">I = I: Indetectável = Intransmissível. Com TARV correta, carga viral indetectável e sem transmissão sexual.</div>
+    <div class="alert-gold alert">PrEP = Profilaxia Pré-Exposição. PEP = Profilaxia Pós-Exposição.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">HPV e Sífilis</div>
+    <h4>HPV</h4>
+    <ul>
+      <li>Vírus do Papiloma Humano — mais de 200 tipos</li>
+      <li>Transmissão: contato sexual (principal); pode ocorrer por contato com lesões</li>
+      <li>Associado ao câncer do colo do útero, pênis, anal e orofaringe</li>
+      <li>Diagnóstico feminino: Papanicolau, colposcopia, biópsia</li>
+      <li>Vacina disponível no SUS</li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Sífilis — Estágios</h4>
+    <table class="tbl">
+      <tr><th>Estágio</th><th>Sintoma-chave</th></tr>
+      <tr><td>Primária</td><td>Cancro duro — ferida única, indolor, bordas endurecidas</td></tr>
+      <tr><td>Secundária</td><td>Manchas nas palmas das mãos e plantas dos pés, febre, ínguas</td></tr>
+      <tr><td>Latente</td><td>Sem sintomas; exame positivo</td></tr>
+      <tr><td>Terciária</td><td>Lesões neurológicas, cardíacas, cegueira, demência</td></tr>
+    </table>
+    <div class="alert">Tratamento: Penicilina Benzatina (Benzetacil). VDRL usado para acompanhamento. FTA-ABS para confirmação. Notificação compulsória.</div>
+    <div class="alert-red alert">Sífilis congênita: gestante transmite ao bebê. Toda gestante deve ser testada no pré-natal.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Febre Amarela e Micoses</div>
+    <h4>Febre Amarela</h4>
+    <ul>
+      <li>Agente: vírus (Flavivirus). Vetor: <em>Aedes aegypti</em> (urbana) e <em>Haemagogus</em> (silvestre)</li>
+      <li>Sintomas: febre, icterícia, hemorragia, insuficiência hepática e renal</li>
+      <li>Macacos são hospedeiros e sentinelas — não transmitem diretamente</li>
+      <li>Principal prevenção: vacina (dose única vitalícia)</li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Micoses (Infecções Fúngicas)</h4>
+    <ul>
+      <li>Candidíase: <em>Candida albicans</em> — tratamento com fluconazol ou nistatina</li>
+      <li>Pé de atleta (Tínea pedis): dermatófitos — ambientes úmidos</li>
+      <li>Onicomicose: tratamento por meses</li>
+      <li>Fatores de risco: diabetes, antibióticos, imunossupressão, corticoides</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ SECTION -->
+  <div class="q-counter">
+    <span>Progresso Infecções</span>
+    <div style="flex:1; margin: 0 1rem;">
+      <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-inf" style="width:0%"></div></div>
+    </div>
+    <strong id="q-prog-inf">0/50</strong>
+  </div>
+
+  <div id="questions-container-inf"></div>
+
+  <button class="back-top" onclick="scrollToTop()">Voltar ao topo</button>
+</div>
+
 <!-- ══════════════════════════════════════════════════════ QUESTÕES -->
 <div id="questoes" class="content section">
 
@@ -741,6 +872,114 @@ function showSection(id, tab) {
 
 function scrollToTop() { window.scrollTo({top:0, behavior:'smooth'}); }
 
+
+const questions_inf = [
+  {q:"Qual é o agente causador da malária?",opts:["Vírus do gênero Flavivirus","Bactéria do gênero Rickettsia","Protozoário do gênero Plasmodium","Fungo do gênero Candida"],a:2,exp:"A malária é causada por protozoário do gênero Plasmodium — não é vírus, bactéria nem doença genética."},
+  {q:"Qual mosquito transmite a malária?",opts:["Aedes aegypti","Fêmea do Anopheles","Culex quinquefasciatus","Lutzomyia longipalpis"],a:1,exp:"A malária é transmitida pela picada da fêmea do mosquito Anopheles infectada. Não é transmitida por contato direto entre pessoas."},
+  {q:"Qual é o período de incubação da malária após a infecção?",opts:["1 a 3 dias","7 a 30 dias","30 a 60 dias","Mais de 60 dias"],a:1,exp:"Os sintomas geralmente aparecem entre 7 e 30 dias após a infecção pelo Plasmodium."},
+  {q:"O diagnóstico laboratorial da malária é realizado por:",opts:["Sorologia IgM/IgG","Gota espessa e esfregaço sanguíneo","PCR urinário","Biópsia de linfonodo"],a:1,exp:"O exame de gota espessa e esfregaço sanguíneo é o padrão para diagnóstico de malária, além de testes rápidos para identificação do parasita."},
+  {q:"Qual forma de leishmaniose apresenta febre prolongada, hepatoesplenomegalia e anemia?",opts:["Leishmaniose cutânea","Leishmaniose mucocutânea","Leishmaniose visceral (calazar)","Leishmaniose difusa"],a:2,exp:"A leishmaniose visceral (calazar) se manifesta com febre prolongada, perda de peso, fraqueza, hepatoesplenomegalia e anemia. Pode ser fatal sem tratamento."},
+  {q:"Qual é o vetor da leishmaniose?",opts:["Fêmea do Anopheles","Aedes aegypti","Fêmea do mosquito-palha (Lutzomyia)","Culex sp."],a:2,exp:"A leishmaniose é transmitida pela picada de fêmeas infectadas do mosquito-palha, principalmente do gênero Lutzomyia."},
+  {q:"A Hepatite A é transmitida principalmente por:",opts:["Relações sexuais desprotegidas","Via fecal-oral (água e alimentos contaminados)","Sangue e seringas","Transmissão vertical mãe-filho"],a:1,exp:"A Hepatite A é transmitida por via fecal-oral, por água e alimentos contaminados. Possui vacina e não cronifica."},
+  {q:"Qual hepatite viral NÃO possui vacina disponível?",opts:["Hepatite A","Hepatite B","Hepatite C","Hepatite E"],a:2,exp:"A Hepatite C não possui vacina disponível, porém possui tratamento com antivirais de ação direta e alta taxa de cura."},
+  {q:"A Hepatite D (HDV) ocorre:",opts:["Em qualquer pessoa susceptível","Apenas em pessoas já infectadas pelo HBV","Exclusivamente via fecal-oral","Apenas em imunossuprimidos"],a:1,exp:"O HDV é um vírus defectivo que só ocorre em pessoas infectadas pelo HBV (coinfecção ou superinfecção). A vacinação contra hepatite B protege indiretamente contra a hepatite D."},
+  {q:"Um paciente apresenta Anti-HBs positivo, HBsAg negativo e Anti-HBc negativo. Isso indica:",opts:["Infecção ativa pelo HBV","Imunidade adquirida por vacinação","Cura de infecção natural","Janela imunológica"],a:1,exp:"Anti-HBs positivo isolado (com HBsAg e Anti-HBc negativos) = imunidade por vacinação. Anti-HBs + Anti-HBc positivos = imunidade por infecção passada (cura)."},
+  {q:"A Hepatite E é semelhante à Hepatite A e está associada principalmente a:",opts:["Transfusão de sangue","Água contaminada","Relação sexual","Compartilhamento de seringas"],a:1,exp:"A Hepatite E, assim como a A, é transmitida via fecal-oral, especialmente por água contaminada. É mais grave em gestantes."},
+  {q:"Qual hepatite é a principal causa de hepatite crônica no mundo?",opts:["Hepatite A","Hepatite B","Hepatite C","Hepatite E"],a:2,exp:"A Hepatite C é a principal causa de hepatite crônica. Transmitida principalmente por sangue, não possui vacina, mas tem cura com antivirais de ação direta."},
+  {q:"O agente causador da dengue é:",opts:["Bactéria Rickettsia dengue","Protozoário Dengue sp.","Vírus arbovírus do gênero Flavivirus","Fungo Dengue albicans"],a:2,exp:"A dengue é causada por vírus arbovírus do gênero Flavivirus. É transmitida pela picada da fêmea do Aedes aegypti."},
+  {q:"Qual medicamento é CONTRAINDICADO na dengue pelo risco de hemorragia?",opts:["Paracetamol","Dipirona","Ácido acetilsalicílico (AAS)","Ibuprofeno em dose única"],a:2,exp:"O AAS (ácido acetilsalicílico) e anti-inflamatórios são contraindicados na dengue pois aumentam o risco de sangramento. Usar paracetamol ou dipirona para febre e dor."},
+  {q:"O exame NS1 na dengue é utilizado para:",opts:["Identificar anticorpos tardios","Detectar o vírus nos primeiros dias da doença","Confirmar cura após tratamento","Medir a carga viral crônica"],a:1,exp:"O NS1 detecta antígeno do vírus da dengue nos primeiros dias da doença (fase aguda). A sorologia IgM/IgG identifica anticorpos em fase posterior."},
+  {q:"Qual é a característica clínica mais marcante do Chikungunya?",opts:["Conjuntivite intensa e exantema pruriginoso","Dor nas articulações intensa e incapacitante","Icterícia e insuficiência hepática","Sangramento espontâneo nas gengivas"],a:1,exp:"A artralgia intensa e incapacitante é a característica marcante do Chikungunya. As dores articulares podem persistir por meses ou anos após a fase aguda."},
+  {q:"Qual arbovirose está associada à microcefalia em recém-nascidos e à Síndrome de Guillain-Barré?",opts:["Dengue","Chikungunya","Zika","Febre Amarela"],a:2,exp:"O vírus Zika está associado à microcefalia e outras malformações congênitas em bebês de mães infectadas durante a gestação, e à Síndrome de Guillain-Barré em adultos."},
+  {q:"O Zika vírus pode ser transmitido por qual via além da picada do mosquito?",opts:["Respiratória","Via sexual","Contato com superfícies","Água contaminada"],a:1,exp:"O Zika pode ser transmitido por via sexual, além da picada do Aedes aegypti. Também há registros de transmissão vertical (mãe para bebê) e por transfusão sanguínea (rara)."},
+  {q:"Qual das arboviroses (dengue, Zika, chikungunya) apresenta febre BAIXA ou ausente e coceira intensa?",opts:["Dengue","Zika","Chikungunya","Todas apresentam febre alta"],a:1,exp:"O Zika costuma apresentar febre baixa ou ausente, exantema (manchas avermelhadas), coceira intensa e conjuntivite sem secreção — diferentemente da dengue e chikungunya."},
+  {q:"Qual célula do sistema imune o HIV ataca preferencialmente?",opts:["Linfócitos B","Neutrófilos","Linfócitos T CD4","Plaquetas"],a:2,exp:"O HIV ataca principalmente os linfócitos T CD4, que são células fundamentais da imunidade celular. A queda de CD4 leva à imunodeficiência progressiva."},
+  {q:"O que significa a sigla TARV?",opts:["Terapia Antiretroviral","Técnica de Avaliação Rápida do Vírus","Tratamento de Alta Resistência Viral","Triagem Ativa para Resposta Viral"],a:0,exp:"TARV = Terapia Antirretroviral. É o tratamento que controla a multiplicação do HIV, devendo ser mantido por toda a vida. Quando realizado corretamente, pode tornar a carga viral indetectável."},
+  {q:"O que significa I = I no contexto do HIV?",opts:["Infecção = Isolamento","Indetectável = Intransmissível","Imunidade = Imunossupressão","Inflamação = Imunodeficiência"],a:1,exp:"I = I significa Indetectável = Intransmissível. Quando o paciente com HIV realiza TARV corretamente e a carga viral fica indetectável, não há transmissão do vírus por via sexual."},
+  {q:"A PrEP é definida como:",opts:["Profilaxia Pós-Exposição ao HIV","Profilaxia Pré-Exposição ao HIV","Protocolo de Reabilitação do Paciente","Programa de Rastreamento e Erradicação do Parasita"],a:1,exp:"PrEP = Profilaxia Pré-Exposição. Medicamento tomado antes de uma possível exposição ao HIV para reduzir o risco de infecção. PEP = Profilaxia Pós-Exposição (usada após o risco)."},
+  {q:"Qual é a fase da infecção pelo HIV caracterizada por doenças oportunistas como tuberculose e candidíase?",opts:["Fase aguda","Fase assintomática","AIDS (fase avançada)","Janela imunológica"],a:2,exp:"A AIDS é a fase avançada da infecção pelo HIV, quando há grande comprometimento da imunidade e surgem doenças oportunistas como tuberculose, candidíase, pneumonia por Pneumocystis e toxoplasmose."},
+  {q:"Qual afirmativa sobre o HIV é CORRETA?",opts:["Toda pessoa com HIV tem AIDS","Toda pessoa com AIDS tem HIV","HIV é transmitido por abraço e aperto de mão","HIV tem cura com tratamento adequado"],a:1,exp:"Toda pessoa com AIDS tem HIV, mas nem toda pessoa com HIV tem AIDS. A AIDS é o estágio avançado. O HIV não é transmitido por abraço, beijo social, suor ou talheres, e não tem cura — apenas controle com TARV."},
+  {q:"O HPV está fortemente associado ao desenvolvimento de qual câncer?",opts:["Câncer de mama","Câncer do colo do útero","Câncer de pulmão","Câncer gástrico"],a:1,exp:"O HPV (especialmente os tipos de alto risco) está fortemente associado ao câncer do colo do útero, além de cânceres de pênis, anal e orofaringe."},
+  {q:"Qual exame é fundamental para rastreamento de lesões cervicais relacionadas ao HPV?",opts:["Sorologia IgM","Colposcopia isolada","Exame de Papanicolau","PCR nasofaríngeo"],a:2,exp:"O exame de Papanicolau (colpocitologia oncótica) é o exame mais cobrado em provas relacionado ao HPV e rastreamento de câncer do colo do útero."},
+  {q:"Qual é o tratamento disponível para o HPV?",opts:["Antiviral oral que elimina o vírus","Remoção das lesões e verrugas; não há medicamento que elimine o vírus","Antibiótico de amplo espectro","Imunoterapia com células T"],a:1,exp:"O tratamento do HPV é direcionado às lesões (cauterização, crioterapia, cirurgia), mas não existe medicamento capaz de eliminar completamente o vírus do organismo."},
+  {q:"O cancro duro — ferida única, indolor, de bordas endurecidas — é a manifestação clínica da:",opts:["Sífilis Secundária","Sífilis Primária","Sífilis Latente","Sífilis Terciária"],a:1,exp:"O cancro duro é a lesão característica da Sífilis Primária. Aparece geralmente nos genitais, boca ou ânus e é indolor, por isso muitas vezes passa desapercebido."},
+  {q:"Manchas na pele incluindo palmas das mãos e plantas dos pés, associadas a febre e mal-estar, caracterizam:",opts:["Sífilis Primária","Sífilis Secundária","Sífilis Latente","Sífilis Terciária"],a:1,exp:"A sífilis secundária caracteriza-se por manchas pelo corpo — inclusive nas palmas das mãos e plantas dos pés — febre, mal-estar, ínguas e queda de cabelo em áreas específicas."},
+  {q:"Qual é o tratamento de escolha para a sífilis?",opts:["Azitromicina","Metronidazol","Penicilina Benzatina (Benzetacil)","Doxiciclina intravenosa"],a:2,exp:"A Penicilina Benzatina (Benzetacil) é o tratamento de escolha para sífilis em todos os estágios. O VDRL é usado para acompanhamento do tratamento."},
+  {q:"Qual teste laboratorial é utilizado para CONFIRMAÇÃO diagnóstica da sífilis?",opts:["VDRL","Teste rápido de triagem","FTA-ABS","Hemograma completo"],a:2,exp:"O FTA-ABS (Fluorescent Treponemal Antibody Absorption) é o teste treponêmico usado para confirmação diagnóstica da sífilis. O VDRL é não-treponêmico, usado para triagem e monitoramento."},
+  {q:"A sífilis congênita ocorre quando:",opts:["O bebê contrai a sífilis após o parto","A gestante transmite a bactéria ao bebê durante a gravidez","O parceiro transmite ao recém-nascido","O bebê é amamentado por mãe com sífilis"],a:1,exp:"A sífilis congênita ocorre pela transmissão do Treponema pallidum da gestante para o feto durante a gravidez. Pode causar aborto, prematuridade, malformações e óbito fetal. Toda gestante deve ser testada no pré-natal."},
+  {q:"Por que os macacos NÃO são considerados transmissores da febre amarela para humanos?",opts:["Pois são imunes ao vírus","Pois são hospedeiros e sentinelas epidemiológicas, mas o vírus é transmitido pelo mosquito","Pois o vírus morre ao sair do macaco","Pois macacos só transmitem leishmania"],a:1,exp:"Os macacos são hospedeiros e sentinelas epidemiológicas — quando morrem, alertam sobre circulação do vírus. A transmissão para humanos ocorre pela picada do mosquito (Haemagogus na silvestre; Aedes no ciclo urbano)."},
+  {q:"Qual é a principal forma de prevenção da febre amarela?",opts:["Uso de repelentes","Saneamento básico","Vacinação — dose única vitalícia","Antibióticos profiláticos"],a:2,exp:"A principal medida de prevenção da febre amarela é a vacinação. A dose única confere proteção vitalícia e é disponibilizada gratuitamente pelo SUS."},
+  {q:"Qual fungo é o agente causador da candidíase?",opts:["Trichophyton rubrum","Candida albicans","Microsporum canis","Aspergillus fumigatus"],a:1,exp:"A candidíase é causada pelo fungo Candida albicans. Manifesta-se com coceira, vermelhidão, corrimento branco (forma vaginal) e ardência. Tratamento: fluconazol ou nistatina."},
+  {q:"O Pé de Atleta (Tínea Pedis) é causado por:",opts:["Vírus do Papiloma","Bactéria Staphylococcus","Fungos dermatófitos","Protozoário Leishmania"],a:2,exp:"O Pé de Atleta (Tínea pedis/frieira) é causado por fungos dermatófitos. Transmitido em ambientes úmidos como piscinas e vestiários. Manifesta-se com coceira entre os dedos dos pés, descamação e fissuras."},
+  {q:"Qual fator de risco AUMENTA significativamente a predisposição a infecções fúngicas graves?",opts:["Prática regular de exercícios","Dieta rica em vitamina C","Imunossupressão, diabetes e uso prolongado de corticoides","Exposição solar moderada"],a:2,exp:"Imunossupressão, diabetes mellitus, uso prolongado de antibióticos e corticoides, e ambientes quentes/úmidos são fatores que aumentam o risco de micoses, inclusive formas graves."},
+  {q:"Qual é o período de duração típico da dengue clássica?",opts:["1 a 3 dias","7 a 10 dias","15 a 21 dias","30 dias ou mais"],a:1,exp:"A dengue clássica dura geralmente 7 a 10 dias. Casos com sinais de alarme ou dengue grave requerem monitoramento e podem necessitar de internação."},
+  {q:"Qual dos seguintes é considerado um SINAL DE ALARME na dengue?",opts:["Febre acima de 38°C","Manchas vermelhas na pele","Dor abdominal intensa e vômitos persistentes","Dor muscular leve"],a:2,exp:"Sinais de alarme da dengue incluem dor abdominal intensa, vômitos persistentes, sangramentos, tontura, sonolência excessiva e dificuldade respiratória — indicam risco de dengue grave."},
+  {q:"O diagnóstico do Zika vírus nos primeiros dias da infecção é feito por:",opts:["Sorologia IgG","PCR","VDRL","Gota espessa"],a:1,exp:"O PCR (Reação em Cadeia da Polimerase) detecta o vírus Zika nos primeiros dias da infecção. A sorologia (IgM/IgG) é utilizada posteriormente para identificar anticorpos."},
+  {q:"Qual das arboviroses pode causar artralgia persistente por MESES ou ANOS?",opts:["Dengue","Zika","Chikungunya","Febre Amarela"],a:2,exp:"O Chikungunya é caracterizado por artralgia intensa que pode persistir por meses ou anos após a fase aguda — uma das principais complicações e diferencial importante dessa doença."},
+  {q:"A sífilis é causada por qual microrganismo?",opts:["Vírus HPV","Bactéria Treponema pallidum","Fungo Candida pallidum","Protozoário Trypanosoma"],a:1,exp:"A sífilis é causada pela bactéria Treponema pallidum. É uma infecção bacteriana de notificação compulsória, tratada com Penicilina Benzatina."},
+  {q:"Qual marcador sorológico indica INFECÇÃO ATIVA pelo vírus da hepatite B?",opts:["Anti-HBs positivo","Anti-HBc IgG positivo","HBsAg positivo","Anti-HBc total negativo"],a:2,exp:"HBsAg (antígeno de superfície do HBV) positivo indica infecção ativa pelo vírus da hepatite B — seja aguda ou crônica."},
+  {q:"A leishmaniose visceral sem tratamento pode ser:",opts:["Autolimitada e cura espontânea na maioria dos casos","Fatal","Leve e de resolução em 7 dias","Apenas cosmética, sem risco à vida"],a:1,exp:"A leishmaniose visceral (calazar) pode ser fatal se não tratada. É uma doença grave que exige diagnóstico precoce e tratamento específico com antiparasitários."},
+  {q:"Qual hepatite é MAIS GRAVE em gestantes?",opts:["Hepatite A","Hepatite B","Hepatite C","Hepatite E"],a:3,exp:"A Hepatite E, apesar de ser geralmente autolimitada, é particularmente grave em gestantes, com risco elevado de insuficiência hepática e mortalidade materna."},
+  {q:"O Aedes albopictus é um dos vetores de qual arbovirose?",opts:["Dengue exclusivamente","Malária","Chikungunya","Febre Amarela urbana"],a:2,exp:"O Chikungunya pode ser transmitido tanto pelo Aedes aegypti quanto pelo Aedes albopictus, diferenciando-se das demais arboviroses que têm o Aedes aegypti como vetor principal."},
+  {q:"Qual é a principal medida de prevenção do HIV na população geral?",opts:["Vacinação anual","Uso correto de preservativos, testagem regular e PrEP/PEP","Abstinência sexual completa","Uso de antibiótico profilático"],a:1,exp:"As principais medidas de prevenção ao HIV são: uso correto de preservativos, não compartilhar seringas, testagem periódica, PrEP (pré-exposição) e PEP (pós-exposição)."},
+  {q:"O macete 'A e E = Água/Alimentos; B, C e D = Blood/Sangue' refere-se a:",opts:["Vias de transmissão das hepatites virais","Estágios da sífilis","Tipos de arboviroses","Formas de leishmaniose"],a:0,exp:"O macete resume as vias de transmissão das hepatites: A e E são transmitidas por via fecal-oral (água/alimentos); B, C e D principalmente por sangue, sexo e seringas. D só ocorre em quem tem B."},
+  {q:"Qual afirmativa sobre micoses é CORRETA?",opts:["Micoses são causadas por vírus","O tratamento é feito com antibióticos","Pacientes imunossuprimidos têm maior risco para micoses graves","Micoses não são transmissíveis por contato"],a:2,exp:"Micoses são causadas por fungos (não vírus nem bactérias). O tratamento é com antifúngicos. Pacientes imunossuprimidos têm maior risco de formas graves. Muitas micoses podem ser transmitidas por contato direto ou objetos contaminados."},
+  {q:"A febre amarela recebe esse nome porque:",opts:["O mosquito transmissor é amarelo","Causa icterícia (coloração amarela da pele e olhos)","O vírus produz pigmento amarelo","As erupções cutâneas são amareladas"],a:1,exp:"A febre amarela recebe esse nome devido à icterícia — coloração amarelada da pele e olhos — causada pelo comprometimento hepático grave resultante da infecção pelo vírus."}
+];
+
+let answered_inf = 0;
+let correct_inf = 0;
+
+const questions_inf_shuffled = shuffleArray(questions_inf);
+
+function buildQuestionsInf() {
+  const c = document.getElementById('questions-container-inf');
+  questions_inf_shuffled.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'qi-' + i;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="q-num">Questão ${i+1} / 50</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="answerInf(${i},${j})" id="opti-${i}-${j}"><span class="opt-letter">${letters[j]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="fbi-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function answerInf(qi, oi) {
+  const q = questions_inf_shuffled[qi];
+  const block = document.getElementById('qi-' + qi);
+  if (block.classList.contains('answered')) return;
+  block.classList.add('answered');
+  answered_inf++;
+
+  const opts = block.querySelectorAll('.q-opt');
+  opts.forEach((o, j) => {
+    o.style.pointerEvents = 'none';
+    if (j === q.a) o.classList.add('correct');
+    else if (j === oi && oi !== q.a) o.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fbi-' + qi);
+  if (oi === q.a) {
+    correct_inf++;
+    fb.textContent = 'Correto! ' + q.exp;
+    fb.className = 'q-feedback show ok';
+  } else {
+    fb.textContent = 'Incorreto. ' + q.exp;
+    fb.className = 'q-feedback show fail';
+  }
+
+  document.getElementById('q-prog-inf').textContent = answered_inf + '/50';
+  document.getElementById('prog-bar-inf').style.width = Math.round((answered_inf/50)*100) + '%';
+}
+
+buildQuestionsInf();
 buildQuestions();
 </script>
 </body>
