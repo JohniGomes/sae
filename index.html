@@ -105,6 +105,63 @@
   .tab.active { color: var(--emerald); border-bottom-color: var(--emerald); }
   .tab:hover:not(.active) { color: var(--text); }
 
+  /* ── QUIZ TAB ACCENT COLORS ── */
+  .tab[data-quiz="sae"].active      { color: #00c875; border-bottom-color: #00c875; }
+  .tab[data-quiz="infeccoes"].active { color: #f59e0b; border-bottom-color: #f59e0b; }
+  .tab[data-quiz="banco"].active    { color: #a78bfa; border-bottom-color: #a78bfa; }
+
+  /* ── STICKY PROGRESS PANEL ── */
+  .sticky-progress {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0.75rem 1rem 0.65rem;
+    margin: -1.25rem -1.25rem 1rem;
+  }
+  .sticky-progress .sp-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+  .sticky-progress .sp-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.45rem;
+  }
+  .sticky-progress .sp-bar-row .score-bar-wrap { flex: 1; }
+  .sticky-progress .sp-prog {
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .sticky-progress .sp-stats {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .sp-stat {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+  }
+  .sp-stat-correct  { background: rgba(0,200,117,0.15); color: #00c875; border: 1px solid rgba(0,200,117,0.3); }
+  .sp-stat-wrong    { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.3); }
+  .sp-stat-nota     { background: rgba(240,165,0,0.15); color: #f0a500; border: 1px solid rgba(240,165,0,0.3); font-weight: 700; }
+
+  /* accent colors per quiz */
+  .accent-sae      { color: #00c875; }
+  .accent-infeccoes { color: #f59e0b; }
+  .accent-banco    { color: #a78bfa; }
+  .bar-sae .score-bar      { background: linear-gradient(90deg, #00c875, #00ff88); }
+  .bar-infeccoes .score-bar { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+  .bar-banco .score-bar    { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
+
   /* ── CONTENT ── */
   .content { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
   .section { display: none; }
@@ -285,9 +342,9 @@
   <button class="tab" onclick="showSection('desnutricao',this)"> Desnutrição</button>
   <button class="tab" onclick="showSection('micronut',this)"> Micronutrientes</button>
   <button class="tab" onclick="showSection('saude',this)"> Saúde LGBT+</button>
-  <button class="tab" onclick="showSection('infeccoes',this)"> Infecções</button>
-  <button class="tab" onclick="showSection('banco',this)"> Banco</button>
-  <button class="tab" onclick="showSection('questoes',this)"> Questões</button>
+  <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)"> Infecções</button>
+  <button class="tab" data-quiz="banco" onclick="showSection('banco',this)"> Banco</button>
+  <button class="tab" data-quiz="sae" onclick="showSection('questoes',this)"> Questões</button>
 </div>
 
 <!-- ══════════════════════════════════════════════════════ RESUMO GERAL -->
@@ -716,12 +773,17 @@
   </div>
 
   <!-- QUIZ SECTION -->
-  <div class="q-counter">
-    <span>Progresso Infecções</span>
-    <div style="flex:1; margin: 0 1rem;">
+  <div class="sticky-progress">
+    <div class="sp-title accent-infeccoes">Questões — Infecções Transmissíveis</div>
+    <div class="sp-bar-row bar-infeccoes">
       <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-inf" style="width:0%"></div></div>
+      <span class="sp-prog accent-infeccoes" id="q-prog-inf">0/50</span>
     </div>
-    <strong id="q-prog-inf">0/50</strong>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="inf-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="inf-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="inf-nota">—</span></span>
+    </div>
   </div>
 
   <div id="questions-container-inf"></div>
@@ -732,12 +794,17 @@
 <!-- ══════════════════════════════════════════════════════ BANCO DE QUESTÕES -->
 <div id="banco" class="content section">
 
-  <div class="q-counter">
-    <span>Progresso Banco</span>
-    <div style="flex:1; margin: 0 1rem;">
+  <div class="sticky-progress">
+    <div class="sp-title accent-banco">Banco de Questões — Infectologia</div>
+    <div class="sp-bar-row bar-banco">
       <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-banco" style="width:0%"></div></div>
+      <span class="sp-prog accent-banco" id="q-prog-banco">0/70</span>
     </div>
-    <strong id="q-prog-banco">0/70</strong>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="banco-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="banco-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="banco-nota">—</span></span>
+    </div>
   </div>
 
   <div id="questions-container-banco"></div>
@@ -748,12 +815,17 @@
 <!-- ══════════════════════════════════════════════════════ QUESTÕES -->
 <div id="questoes" class="content section">
 
-  <div class="q-counter">
-    <span>Progresso</span>
-    <div style="flex:1; margin: 0 1rem;">
+  <div class="sticky-progress">
+    <div class="sp-title accent-sae">Questões — SAE Pediátrico</div>
+    <div class="sp-bar-row bar-sae">
       <div class="score-bar-wrap"><div class="score-bar" id="prog-bar" style="width:0%"></div></div>
+      <span class="sp-prog accent-sae" id="q-prog">0/50</span>
     </div>
-    <strong id="q-prog">0/50</strong>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="sae-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="sae-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="sae-nota">—</span></span>
+    </div>
   </div>
 
   <div id="questions-container"></div>
@@ -877,6 +949,9 @@ function answer(qi, oi) {
   document.getElementById('score-display').textContent = correct;
   document.getElementById('q-prog').textContent = answered + '/50';
   document.getElementById('prog-bar').style.width = Math.round((answered/50)*100) + '%';
+  document.getElementById('sae-correct').textContent = correct;
+  document.getElementById('sae-wrong').textContent = answered - correct;
+  document.getElementById('sae-nota').textContent = answered ? (correct/50*10).toFixed(1) : '—';
 }
 
 function showSection(id, tab) {
@@ -994,6 +1069,9 @@ function answerInf(qi, oi) {
 
   document.getElementById('q-prog-inf').textContent = answered_inf + '/50';
   document.getElementById('prog-bar-inf').style.width = Math.round((answered_inf/50)*100) + '%';
+  document.getElementById('inf-correct').textContent = correct_inf;
+  document.getElementById('inf-wrong').textContent = answered_inf - correct_inf;
+  document.getElementById('inf-nota').textContent = answered_inf ? (correct_inf/50*10).toFixed(1) : '—';
 }
 
 const questions_banco = [
@@ -1121,6 +1199,9 @@ function answerBanco(qi, oi) {
 
   document.getElementById('q-prog-banco').textContent = answered_banco + '/70';
   document.getElementById('prog-bar-banco').style.width = Math.round((answered_banco/70)*100) + '%';
+  document.getElementById('banco-correct').textContent = correct_banco;
+  document.getElementById('banco-wrong').textContent = answered_banco - correct_banco;
+  document.getElementById('banco-nota').textContent = answered_banco ? (correct_banco/70*10).toFixed(1) : '—';
 }
 
 buildQuestionsBanco();
