@@ -109,6 +109,44 @@
   .tab[data-quiz="sae"].active      { color: #00c875; border-bottom-color: #00c875; }
   .tab[data-quiz="infeccoes"].active { color: #f59e0b; border-bottom-color: #f59e0b; }
   .tab[data-quiz="banco"].active    { color: #a78bfa; border-bottom-color: #a78bfa; }
+  .tab[data-quiz="crianca"].active  { color: #38bdf8; border-bottom-color: #38bdf8; }
+
+  /* ── GROUPED NAV ── */
+  .nav-shell {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 60;
+  }
+  .nav-groups {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-groups::-webkit-scrollbar { display: none; }
+  .nav-group {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+  .nav-group:last-child { border-right: none; }
+  .nav-group-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 5px 12px 2px;
+    white-space: nowrap;
+  }
+  .nav-group-label.lbl-resumo  { color: #8fa8c8; }
+  .nav-group-label.lbl-questao { color: #a78bfa; }
+  .nav-tabs-row {
+    display: flex;
+    padding: 0 4px 0;
+  }
 
   /* ── STICKY PROGRESS PANEL ── */
   .sticky-progress {
@@ -161,6 +199,8 @@
   .bar-sae .score-bar      { background: linear-gradient(90deg, #00c875, #00ff88); }
   .bar-infeccoes .score-bar { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
   .bar-banco .score-bar    { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
+  .bar-crianca .score-bar  { background: linear-gradient(90deg, #38bdf8, #7dd3fc); }
+  .accent-crianca { color: #38bdf8; }
 
   /* ── CONTENT ── */
   .content { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
@@ -336,15 +376,31 @@
   </div>
 </div>
 
-<div class="tabs">
-  <button class="tab active" onclick="showSection('resumo',this)"> Resumo</button>
-  <button class="tab" onclick="showSection('diarreia',this)"> Diarreia</button>
-  <button class="tab" onclick="showSection('desnutricao',this)"> Desnutrição</button>
-  <button class="tab" onclick="showSection('micronut',this)"> Micronutrientes</button>
-  <button class="tab" onclick="showSection('saude',this)"> Saúde LGBT+</button>
-  <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)"> Infecções</button>
-  <button class="tab" data-quiz="banco" onclick="showSection('banco',this)"> Banco</button>
-  <button class="tab" data-quiz="sae" onclick="showSection('questoes',this)"> Questões</button>
+<div class="nav-shell">
+  <div class="nav-groups">
+
+    <div class="nav-group">
+      <div class="nav-group-label lbl-resumo">Resumos</div>
+      <div class="nav-tabs-row">
+        <button class="tab active" onclick="showSection('resumo',this)">Geral</button>
+        <button class="tab" onclick="showSection('diarreia',this)">Diarreia</button>
+        <button class="tab" onclick="showSection('desnutricao',this)">Desnutrição</button>
+        <button class="tab" onclick="showSection('micronut',this)">Micronut.</button>
+        <button class="tab" onclick="showSection('saude',this)">LGBT+</button>
+        <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)">Infecções</button>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label lbl-questao">Questões</div>
+      <div class="nav-tabs-row">
+        <button class="tab" data-quiz="sae" onclick="showSection('questoes',this)">SAE</button>
+        <button class="tab" data-quiz="banco" onclick="showSection('banco',this)">Banco</button>
+        <button class="tab" data-quiz="crianca" onclick="showSection('crianca',this)">Criança</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════ RESUMO GERAL -->
@@ -833,6 +889,27 @@
   <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
 </div>
 
+<!-- ══════════════════════════════════════════════════════ CRIANÇA/ADOLESCENTE -->
+<div id="crianca" class="content section">
+
+  <div class="sticky-progress">
+    <div class="sp-title accent-crianca">Questões — Saúde da Criança e do Adolescente</div>
+    <div class="sp-bar-row bar-crianca">
+      <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-crianca" style="width:0%"></div></div>
+      <span class="sp-prog accent-crianca" id="q-prog-crianca">0/50</span>
+    </div>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="crianca-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="crianca-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="crianca-nota">—</span></span>
+    </div>
+  </div>
+
+  <div id="questions-container-crianca"></div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
 <script>
 const questions = [
   {q:"Qual a taxa nacional de mortalidade infantil do Brasil em 2024?",opts:["10,4/mil NV","11,5/mil NV","12,6/mil NV","15,7/mil NV"],a:2,exp:"A taxa nacional em 2024 é 12,6/mil NV, estagnada desde 2022. O recorde histórico mais baixo foi 11,5 em 2020."},
@@ -1204,6 +1281,112 @@ function answerBanco(qi, oi) {
   document.getElementById('banco-nota').textContent = answered_banco ? (correct_banco/70*10).toFixed(1) : '—';
 }
 
+const questions_crianca = [
+  {topic:"desnut",q:"Segundo o AIDIPI 2017 do Ministério da Saúde, a desnutrição é uma doença de natureza clínico-social multifatorial cujas raízes se encontram principalmente em:",opts:["Predisposição genética e fatores hereditários","Pobreza e fatores socioeconômicos","Infecções virais de repetição na primeira infância","Desequilíbrios hormonais congênitos"],a:1,exp:"O MS/AIDIPI 2017 classifica a desnutrição como doença clínico-social multifatorial com raízes na pobreza. Fatores como saneamento inadequado, baixo nível socioeconômico, desmame precoce e violência familiar contribuem para seu desenvolvimento."},
+  {topic:"desnut",q:"Qual é o sinal clínico mais marcante do Kwashiorkor que o diferencia do Marasmo?",opts:["Emagrecimento extremo com fácies senil","Edema (inchaço), geralmente nos pés, pernas e face","Perda total do panículo adiposo sem edema","Distensão abdominal com parasitoses graves"],a:1,exp:"O Kwashiorkor é a desnutrição proteica grave, cujo sinal clínico mais marcante é o EDEMA. O Marasmo é a desnutrição energético-proteica global, sem edema, com emagrecimento 'seco' e fácies senil."},
+  {topic:"desnut",q:"O Marasmo acomete principalmente qual faixa etária?",opts:["Pré-adolescentes entre 8 e 12 anos","Crianças menores de 1 ano (lactentes)","Crianças entre 3 e 5 anos (pré-escolares)","Adolescentes entre 12 e 15 anos"],a:1,exp:"O Marasmo acomete principalmente lactentes menores de 1 ano, com deficiência calórica total (energia, proteínas, vitaminas e minerais). Apresenta emagrecimento seco, fácies senil, perda do panículo adiposo e musculatura."},
+  {topic:"desnut",q:"O Kwashiorkor-Marasmático é considerado a forma mais grave de desnutrição. Em que faixa etária é mais frequente e qual sua principal característica?",opts:["Recém-nascidos; icterícia e hepatomegalia","Crianças entre 1 e 2 anos; forma mista com edema e perda do tecido celular subcutâneo","Crianças de 5 a 7 anos; anasarca e ascite","Adolescentes; obesidade paradoxal com edema periférico"],a:1,exp:"O Kwashiorkor-Marasmático é a associação simultânea do déficit calórico total (marasmo) e déficit proteico grave (kwashiorkor). É mais frequente em crianças de 1 a 2 anos, com alto risco de mortalidade."},
+  {topic:"desnut",q:"Qual valor de hemoglobina é utilizado pelo AIDIPI 2017 para definir anemia GRAVE na criança desnutrida?",opts:["Hb < 10 g/dL","Hb < 7 g/dL","Hb < 5 g/dL","Hb < 8 g/dL"],a:2,exp:"Pelo AIDIPI 2017, anemia grave é definida por hemoglobina < 5 g/dL. Abaixo desse valor, há indicação de transfusão de hemácias como parte da fase de estabilização do tratamento da desnutrição grave."},
+  {topic:"desnut",q:"Quais são os sinais de alerta (red flags) na desnutrição grave que demandam atenção imediata?",opts:["Tosse, coriza e febre baixa","Hipoglicemia, desidratação, hipotermia, anemia grave e sinais de infecção","Erupção cutânea, prurido e icterícia","Dor abdominal, náusea e vômito isolados"],a:1,exp:"Os sinais de alerta na desnutrição grave são: hipoglicemia, desidratação, hipotermia (< 36,5°C), anemia grave e sinais de infecção. Esses são os pontos-chave do atendimento, pois determinam risco de morte."},
+  {topic:"desnut",q:"O tratamento da desnutrição grave em nível hospitalar é dividido em 3 fases. Qual é a sequência correta?",opts:["Reabilitação → Estabilização → Acompanhamento","Estabilização → Reabilitação → Acompanhamento","Acompanhamento → Estabilização → Reabilitação","Diagnóstico → Cirurgia → Alta hospitalar"],a:1,exp:"As 3 fases do tratamento hospitalar são: Fase 1 – Estabilização (tratar hipoglicemia, hipotermia, desidratação, iniciar alimentação); Fase 2 – Reabilitação (alimentação intensiva, recuperação do peso); Fase 3 – Acompanhamento ambulatorial."},
+  {topic:"desnut",q:"Por que crianças internadas com desnutrição grave devem ficar isoladas?",opts:["Para evitar que influenciem negativamente outras crianças no ambiente hospitalar","Porque apresentam imunidade reduzida e risco aumentado de infecções graves","Por determinação legal do ECA (Estatuto da Criança e do Adolescente)","Para facilitar o controle do balanço hídrico e alimentar"],a:1,exp:"A desnutrição grave compromete profundamente o sistema imunológico, tornando a criança altamente suscetível a infecções oportunistas. O isolamento é necessário para reduzir o risco de infecções cruzadas no ambiente hospitalar."},
+  {topic:"desnut",q:"Qual é o principal fator causal do aumento da desnutrição descrito pelo Ministério da Saúde (AIDIPI 2017)?",opts:["Uso excessivo de antibióticos na infância","Interrupção precoce do aleitamento materno exclusivo e alimentação complementar inadequada nos primeiros 2 anos","Excesso de vacinação suprimindo a microbiota intestinal","Herança genética materna de má absorção intestinal"],a:1,exp:"O AIDIPI 2017 destaca que a desnutrição começa frequentemente com: a) interrupção precoce do aleitamento materno exclusivo e b) alimentação complementar inadequada nos primeiros 2 anos de vida, associada a episódios de doenças infecciosas."},
+  {topic:"desnut",q:"O Programa de acompanhamento após alta hospitalar da desnutrição grave recomenda retornos a cada:",opts:["3 meses até completar 5 anos","1 semana, 2 semanas, 1 mês e 6 meses; depois de 6 em 6 meses até os 3 anos","Somente 1 vez por ano","Mensalmente até a criança completar 18 meses"],a:1,exp:"O acompanhamento após alta deve ser: 1 semana, 2 semanas, 1 mês e 6 meses. Depois, de 6 em 6 meses até a criança completar 3 anos. O risco de recaída é maior logo após a alta hospitalar."},
+  {topic:"anemia",q:"Segundo a OMS e o CAB 33 do MS, qual é o critério laboratorial para diagnóstico de anemia em crianças menores de 5 anos?",opts:["Hemoglobina < 12 g/dL","Hemoglobina < 11 g/dL","Hemoglobina < 10 g/dL","Hematócrito < 40%"],a:1,exp:"A OMS define anemia quando a hemoglobina está abaixo dos valores normais para a idade. Para crianças de 6 meses a 5 anos, o ponto de corte é Hb < 11 g/dL. Valores < 5 g/dL configuram anemia grave pelo AIDIPI 2017."},
+  {topic:"anemia",q:"Qual é o tipo de anemia mais prevalente em crianças menores de 5 anos no Brasil, especialmente entre 6 e 24 meses?",opts:["Anemia hemolítica autoimune","Anemia falciforme","Anemia ferropriva (por deficiência de ferro)","Anemia megaloblástica por deficiência de B12"],a:2,exp:"A anemia ferropriva é a mais frequente em crianças menores de 5 anos, especialmente entre 6 e 24 meses. É também a carência nutricional mais prevalente nos países em desenvolvimento, incluindo o Brasil."},
+  {topic:"anemia",q:"Como é avaliada clinicamente a presença de anemia durante a consulta do AIDPI?",opts:["Dosagem imediata de hemoglobina em ponto de cuidado","Avaliação da palidez palmar como sinal clínico inicial","Oximetria de pulso como rastreio","Eletroforese de hemoglobina de rotina"],a:1,exp:"Na avaliação do AIDIPI, a palidez palmar é o sinal clínico utilizado para rastrear anemia. Se houver dúvida, solicitam-se exames laboratoriais (hemoglobina e hematócrito). Hb < 11 g/dL confirma anemia."},
+  {topic:"anemia",q:"O PNSF (Programa Nacional de Suplementação de Ferro) recomenda suplementação profilática de ferro para crianças de:",opts:["0 a 6 meses de vida","6 a 24 meses de idade","2 a 5 anos de idade","Apenas para recém-nascidos prematuros"],a:1,exp:"O PNSF (Portaria nº 1.555/2013) preconiza suplementação profilática de ferro para TODAS as crianças de 6 a 24 meses de idade, gestantes desde o pré-natal, mulheres no pós-parto e pós-aborto."},
+  {topic:"anemia",q:"Quais causas podem levar ao desenvolvimento de anemia ferropriva na infância?",opts:["Excesso de vitamina C e proteínas na dieta","Aumento da necessidade, excesso de perda, má absorção gastrointestinal, dieta deficiente em Fe e anemia materna","Uso prolongado de anti-inflamatórios não esteroidais","Exposição solar insuficiente e deficiência de vitamina D"],a:1,exp:"As causas de anemia ferropriva incluem: aumento da necessidade (crescimento rápido), excesso de perda (hemorragias), má absorção gastrointestinal, dieta deficiente em ferro, anemia materna e hemólise neonatal."},
+  {topic:"anemia",q:"Qual é a diferença entre o ferro heme e o ferro não heme em relação à absorção?",opts:["O ferro não heme tem melhor absorção por ser de origem vegetal","O ferro heme, de origem animal, tem melhor absorção; o não heme, vegetal, tem absorção menor, melhorada com vitamina C e proteínas cárneas","Ambos têm absorção idêntica quando associados a ácido fólico","O ferro não heme é contraindicado em crianças menores de 2 anos"],a:1,exp:"O ferro HEME (carnes, peixes, frango, leite materno) tem melhor absorção. O ferro NÃO HEME (vegetais) tem menor absorção, porém melhora quando consumido com vitamina C ou proteínas de carne e peixe."},
+  {topic:"anemia",q:"Além da anemia, quais outros sinais/sintomas caracterizam especificamente a deficiência de ferro (anemia ferropriva)?",opts:["Fotofobia, xeroftalmia e queratomalácia","Glossite, perversão alimentar (pica), disfagia e queda do rendimento intelectual","Edema generalizado, ascite e hepatomegalia","Petéquias, equimoses e sangramento gengival"],a:1,exp:"A anemia ferropriva tem sinais específicos além dos gerais de anemia: glossite (inflamação da língua), perversão alimentar (pica — comer terra, gelo), disfagia intensa e queda do rendimento intelectual e motor."},
+  {topic:"anemia",q:"A partir de 2022, o esquema de suplementação profilática de sulfato ferroso para crianças prevê:",opts:["Uso contínuo diário dos 6 meses até os 2 anos sem interrupção","3 meses de suplementação diária, pausa de 3 meses, novo ciclo; totalizando múltiplos ciclos até 24 meses","Suplementação semanal em dose única","Suplementação apenas quando hemoglobina < 10 g/dL"],a:1,exp:"A partir de 2022, o esquema prevê: suplementação diária por 3 meses consecutivos → pausa de 3 meses → novo ciclo de 3 meses. Essa alternância visa melhorar a absorção e reduzir efeitos gastrointestinais."},
+  {topic:"anemia",q:"Crianças em aleitamento materno exclusivo devem iniciar a suplementação de ferro a partir de:",opts:["2 meses de vida","4 meses de vida","6 meses de vida","Ao nascimento"],a:2,exp:"Crianças em aleitamento materno exclusivo ou uso de fórmula infantil só devem receber suplementos de ferro a partir do 6º mês. Crianças sem aleitamento exclusivo e em uso de leite de vaca podem iniciar aos 4 meses."},
+  {topic:"anemia",q:"Qual é o principal objetivo do Programa Nacional de Suplementação de Ferro (PNSF) em conjunto com a política de fortificação de farinhas?",opts:["Erradicar a anemia falciforme no Brasil até 2030","Controlar e reduzir a prevalência da anemia por deficiência de ferro no País","Tratar a anemia hemolítica em populações específicas","Substituir a alimentação natural por suplementos em crianças vulneráveis"],a:1,exp:"O PNSF, associado à política de fortificação obrigatória das farinhas de trigo e milho com ferro e ácido fólico, além da orientação nutricional, constitui o conjunto de estratégias para controle e redução da anemia ferropriva no Brasil."},
+  {topic:"hipovit",q:"Qual é a principal função da Vitamina A no organismo humano?",opts:["Formação dos ossos e absorção de cálcio","Funcionamento dos fotorreceptores da retina, crescimento, imunidade, saúde da pele e mucosas","Síntese de colágeno e cicatrização tecidual","Coagulação sanguínea e síntese de protrombina"],a:1,exp:"A Vitamina A é necessária para o funcionamento dos fotorreceptores da retina (visão), crescimento e desenvolvimento, manutenção do sistema imune, e saúde das mucosas (pulmões, intestino, trato urinário)."},
+  {topic:"hipovit",q:"As deficiências de Vitamina A e Ferro em crianças menores de 5 anos são classificadas pelo MS como:",opts:["Problemas endêmicos restritos à Região Amazônica","Distúrbios nutricionais prioritários da Agenda de Saúde Pública mundial","Condições benignas sem impacto na mortalidade infantil","Doenças de notificação compulsória imediata"],a:1,exp:"A OMS e o MS classificam as deficiências de Vitamina A e Ferro em < 5 anos como distúrbios nutricionais PRIORITÁRIOS da Agenda de Saúde Pública mundial, com impacto direto na morbimortalidade infantil."},
+  {topic:"hipovit",q:"A Hipovitaminose A ocorre com maior frequência em qual região do Brasil e em qual população?",opts:["Região Sul, em crianças com dieta rica em proteínas animais","Região Nordeste, principalmente em pré-escolares de baixo nível socioeconômico","Região Sudeste, em adolescentes com dieta vegetariana","Região Centro-Oeste, em crianças de áreas rurais"],a:1,exp:"A Hipovitaminose A é mais frequente na Região Nordeste, acometendo principalmente pré-escolares. Está associada à desnutrição proteico-calórica, baixo IMC e baixo nível socioeconômico."},
+  {topic:"hipovit",q:"Qual é a manifestação ocular primária da Hipovitaminose A?",opts:["Conjuntivite bacteriana recorrente","Cegueira noturna (nictalopia) e xerose conjuntival/corneal","Glaucoma de ângulo aberto","Degeneração macular relacionada à idade"],a:1,exp:"As lesões oculares se desenvolvem insidiosamente: primeiro surgem cegueira noturna (nictalopia) e xerose (secura) de conjuntiva e córnea. Nos casos graves, progridem para ulcerações, queratomalácia e cegueira definitiva."},
+  {topic:"hipovit",q:"As Manchas de Bitot são um sinal clássico da Hipovitaminose A. Onde são encontradas?",opts:["Na mucosa oral, como placas brancas endurecidas","Na conjuntiva ocular, como placas branco-acinzentadas de queratina","Na pele, como manchas hipocrômicas descamativas","Nas unhas, como estrias longitudinais brancas"],a:1,exp:"As Manchas de Bitot são placas branco-acinzentadas de células queratinizadas que aparecem na conjuntiva bulbar (lateral), sendo sinal patognomônico de Hipovitaminose A. Representam estágio intermediário antes da xeroftalmia grave."},
+  {topic:"hipovit",q:"Como o ferro está relacionado à metabolização da Vitamina A?",opts:["O ferro compete com a vitamina A pela absorção no intestino delgado","O ferro é necessário para a conversão do β-caroteno em Vitamina A ativa (retinal)","O ferro inibe a síntese de rodopsina na retina","Não há relação metabólica entre ferro e vitamina A"],a:1,exp:"O ferro é essencial para a conversão do β-caroteno em Retinal (Vitamina A ativa) através de enzimas dependentes de ferro. Além disso, o ferro compõe o citocromo P450, responsável pela metabolização hepática de diversas substâncias."},
+  {topic:"hipovit",q:"Qual é a via de administração dos suplementos de Vitamina A no Programa Nacional de Suplementação?",opts:["Via intramuscular ou endovenosa, conforme tolerância","Via oral exclusivamente","Via sublingual, para melhor absorção","Via transdérmica em crianças abaixo de 1 ano"],a:1,exp:"Os suplementos de Vitamina A são administrados exclusivamente por VIA ORAL. A administração intramuscular ou endovenosa NÃO é recomendada pelo Ministério da Saúde."},
+  {topic:"hipovit",q:"Quais são os possíveis efeitos colaterais dos suplementos de Vitamina A nas dosagens recomendadas pelo programa?",opts:["Insuficiência renal aguda e icterícia","Geralmente não há efeitos adversos graves; possibilidade de menor apetite no dia da administração, vômito ou cefaleia","Convulsões febris em menores de 1 ano","Hiperpigmentação da pele e fotossensibilidade"],a:1,exp:"Nas dosagens recomendadas pelo Programa, geralmente NÃO há efeitos colaterais graves. É possível que a criança coma menos no dia da administração, vomite ou sinta cefaleia — manifestações transitórias e leves."},
+  {topic:"hipovit",q:"Quais infecções têm maior incidência e severidade em crianças com deficiência de Vitamina A?",opts:["Infecções por fungos dermatófitos e onicomicoses","Sarampo, doenças diarreicas e pneumonia","Infecções do trato urinário e pielonefrite","Meningite bacteriana e sepse neonatal"],a:1,exp:"A deficiência de Vitamina A compromete o sistema imune e a integridade das mucosas, aumentando a incidência e severidade de sarampo, doenças diarreicas e pneumonia — principais causas de mortalidade infantil."},
+  {topic:"hipovit",q:"A queratinização das mucosas respiratória e urinária causada pela hipovitaminose A predispõe a criança a:",opts:["Obstrução intestinal por bezoar","Infecções respiratórias e urinárias de repetição por perda da barreira mucosa protetora","Hepatite aguda por acúmulo de retinol no fígado","Cálculos biliares por déficit de bile em emulsificação"],a:1,exp:"A Vitamina A mantém a integridade do epitélio (pele e mucosas). Sua deficiência causa queratinização das mucosas pulmonar e urinária, comprometendo a barreira protetora e facilitando infecções respiratórias e do trato urinário."},
+  {topic:"diarreia",q:"Segundo o AIDPI/MS, qual é a classificação da desidratação quando a criança apresenta DOIS OU MAIS dos seguintes sinais: inquieta/irritada, olhos fundos, sinal da prega cutânea volta lentamente?",opts:["Sem desidratação","Desidratação leve","Algum grau de desidratação (desidratação moderada)","Desidratação grave"],a:2,exp:"Pelo AIDPI, a presença de 2 ou mais sinais de alerta (inquieta/irritada, olhos fundos, prega cutânea que volta lentamente, bebe com avidez) classifica como 'ALGUM GRAU DE DESIDRATAÇÃO' (moderada). O Plano B de hidratação é indicado."},
+  {topic:"diarreia",q:"De acordo com o MS/AIDPI, qual é o Plano de Tratamento indicado para criança COM algum grau de desidratação (desidratação moderada)?",opts:["Plano A: tratar em casa com SRO","Plano B: hidratação oral supervisionada na UBS com SRO por 4 horas","Plano C: hidratação venosa imediata em hospital","Apenas observação e retorno em 48 horas"],a:1,exp:"O Plano B é indicado para 'algum grau de desidratação': hidratação oral com SRO (Soro de Reidratação Oral) supervisionada na UBS por 4 horas, reavaliando continuamente. A dose é 50–100 mL/kg de SRO em 4 horas."},
+  {topic:"diarreia",q:"Quando uma criança com diarreia apresenta sinais de desidratação GRAVE (letárgica/inconsciente, olhos muito fundos, prega cutânea volta muito lentamente, não consegue beber), qual é a conduta imediata?",opts:["Iniciar Plano A em casa e retornar em 24 horas","Administrar SRO e reavaliar após 30 minutos","Iniciar Plano C com hidratação venosa imediata em hospital","Prescrever antibiótico oral e manter dieta habitual"],a:2,exp:"A desidratação grave exige o Plano C: hidratação endovenosa imediata (Soro Ringer Lactato ou SF 0,9%), geralmente em hospital. O MS recomenda 100 mL/kg EV em lactentes em 3 horas e em crianças maiores em 3 horas."},
+  {topic:"diarreia",q:"Qual é o papel do Zinco no tratamento da diarreia aguda em crianças recomendado pela OMS/MS?",opts:["Substituir o SRO como solução de reidratação oral","Reduzir a duração e gravidade do episódio diarreico; suplementar por 10 a 14 dias","Funcionar como antibiótico de amplo espectro contra rotavírus","Aumentar a absorção de lactose no intestino delgado"],a:1,exp:"A OMS e o MS recomendam a suplementação de Zinco no tratamento da diarreia aguda: reduz a duração e a gravidade do episódio. A dose é 10–20 mg/dia por 10 a 14 dias. O Zinco também previne novos episódios diarreicos."},
+  {topic:"diarreia",q:"O Soro de Reidratação Oral (SRO) recomendado pelo MS tem composição com baixa osmolaridade. Qual é o principal benefício desta formulação?",opts:["Maior palatabilidade e aceitação pela criança","Redução da osmolaridade diminui vômitos, duração da diarreia e necessidade de hidratação venosa","Maior concentração de sódio para corrigir hipernatremia","Elimina a necessidade de suplementação de Zinco"],a:1,exp:"O SRO de baixa osmolaridade (245 mOsm/L vs 311 mOsm/L da fórmula antiga) reduz significativamente: vômitos, volume de fezes, duração da diarreia e necessidade de hidratação venosa, com melhor absorção intestinal."},
+  {topic:"diarreia",q:"Quais são os principais agentes etiológicos da diarreia aguda em crianças menores de 5 anos?",opts:["Staphylococcus aureus e Candida albicans exclusivamente","Rotavírus (principal causa viral), Escherichia coli, Salmonella e Campylobacter","Mycobacterium tuberculosis e Treponema pallidum","Plasmodium vivax e Leishmania chagasi"],a:1,exp:"O Rotavírus é a principal causa de diarreia grave em crianças < 5 anos (50–60% dos casos hospitalizados). Entre as causas bacterianas destacam-se: E. coli enteropatogênica, Salmonella e Campylobacter."},
+  {topic:"diarreia",q:"Qual das afirmativas sobre o uso de antibióticos na diarreia aguda infantil está CORRETA?",opts:["Devem ser prescritos em todos os casos de diarreia para prevenir complicações bacterianas","São indicados apenas em casos específicos: diarreia com sangue (disenteria), cólera e giardíase comprovada","Devem ser usados nos primeiros 3 dias de qualquer diarreia aguda","São contraindicados em crianças menores de 2 anos"],a:1,exp:"O MS não recomenda antibióticos de rotina para diarreia aguda. São indicados especificamente em: diarreia com sangue (disenteria — Shigella), cólera e parasitoses comprovadas como giardíase e amebíase."},
+  {topic:"diarreia",q:"Sobre a alimentação durante a diarreia aguda, qual é a recomendação do MS/AIDPI?",opts:["Suspender todos os alimentos sólidos por 24-48 horas para descanso intestinal","Manter a alimentação habitual, inclusive leite materno; não realizar jejum","Substituir o leite materno por leite de vaca diluído","Ofertar apenas líquidos claros (água e chá) por 72 horas"],a:1,exp:"O MS recomenda MANTER a alimentação habitual durante a diarreia. O jejum é PREJUDICIAL. O leite materno deve ser mantido e oferecido com maior frequência. A alimentação previne a desnutrição secundária à diarreia."},
+  {topic:"diarreia",q:"A vacina contra Rotavírus humano (VORH) está disponível no Calendário Nacional de Vacinação. Quando é administrada?",opts:["Dose única aos 12 meses","Aos 2 e 4 meses de idade (2 doses)","Anualmente a partir dos 6 meses","Somente em surtos epidêmicos"],a:1,exp:"A Vacina Oral contra Rotavírus Humano (VORH) é administrada em 2 doses: aos 2 meses e aos 4 meses de idade, com janela etária específica (não pode ser administrada após 7 meses e 29 dias). É altamente eficaz contra diarreia grave."},
+  {topic:"diarreia",q:"No Plano A de tratamento da diarreia (sem desidratação), qual é a orientação sobre o uso de SRO?",opts:["Não é necessário SRO; apenas manter alimentação normal","Oferecer 50–100 mL de SRO após cada evacuação diarreica e orientar retorno se piorar","Administrar SRO por sonda nasogástrica em lactentes","Misturar SRO com leite materno para facilitar a aceitação"],a:1,exp:"No Plano A (sem desidratação): manter alimentação, oferecer 50–100 mL de SRO após cada evacuação diarreica (em menores de 1 ano) ou 100–200 mL (em maiores de 1 ano). Orientar retorno se houver sinais de piora."},
+  {topic:"adolesc",q:"Segundo a OMS, qual é a faixa etária considerada adolescência?",opts:["8 a 15 anos","10 a 19 anos","12 a 17 anos","15 a 24 anos"],a:1,exp:"A OMS define adolescência como o período entre 10 e 19 anos. O ECA (Estatuto da Criança e do Adolescente) adota faixa ligeiramente diferente: 12 a 18 anos. É nessa fase que emergem as necessidades específicas de saúde sexual e reprodutiva."},
+  {topic:"adolesc",q:"O Programa Saúde na Escola (PSE) foi instituído em que ano e com qual objetivo principal?",opts:["2001, para combater a obesidade infantil nas escolas públicas","2007, para levar a equipe da atenção básica ao âmbito escolar promovendo saúde e bem-estar dos estudantes","2010, para rastrear tuberculose e doenças infectocontagiosas em escolas","2015, para promover vacinação anual nas escolas da rede pública"],a:1,exp:"O PSE foi instituído em 2007 com objetivo de levar a equipe da atenção básica ao espaço escolar, desenvolvendo ações educativas de promoção e prevenção de saúde para estudantes da rede pública de educação básica."},
+  {topic:"adolesc",q:"Quais são os principais riscos da gravidez na adolescência do ponto de vista físico?",opts:["Apenas riscos psicossociais; não há riscos físicos específicos na adolescência","Parto prematuro, descolamento de placenta, aborto espontâneo/provocado, baixo peso do bebê e anemia materna","Infecções do trato urinário de repetição exclusivamente","Risco aumentado de diabetes gestacional tipo 1"],a:1,exp:"A gravidez na adolescência apresenta riscos físicos aumentados porque o corpo não está completamente formado: parto prematuro, descolamento de placenta, aborto espontâneo/provocado, baixo peso ao nascer, anemia e maior morbimortalidade materna."},
+  {topic:"adolesc",q:"Qual é o papel do enfermeiro na educação sexual no contexto escolar (PSE)?",opts:["Realizar consultas médicas de rotina para adolescentes nas escolas","Orientar e promover reflexão sobre vida sexual, riscos de gravidez precoce, ISTs e planejamento familiar por meio de ações educativas","Prescrever métodos contraceptivos diretamente aos adolescentes nas escolas","Aplicar vacinação HPV exclusivamente, sem abordagem de sexualidade"],a:1,exp:"No PSE, o enfermeiro atua na educação sexual por meio de ações educativas: promover reflexão sobre sexualidade, riscos de gravidez precoce e ISTs, fortalecer a autonomia dos adolescentes sobre sua vida sexual e reprodutiva."},
+  {topic:"adolesc",q:"O princípio da EQUIDADE no SUS, aplicado à saúde do adolescente, significa:",opts:["Oferecer os mesmos serviços para todos os adolescentes, sem distinção","Tratar desigualmente os desiguais, ofertando mais a quem mais precisa para reduzir iniquidades","Garantir apenas serviços de baixa complexidade para adolescentes","Priorizar adolescentes de classe média por maior adesão ao tratamento"],a:1,exp:"Equidade no SUS significa TRATAR DESIGUALMENTE OS DESIGUAIS: oferecer mais recursos e atenção a quem tem maior necessidade ou vulnerabilidade, visando reduzir as desigualdades em saúde. Para adolescentes em situação de vulnerabilidade social, isso é fundamental."},
+  {topic:"adolesc",q:"Quais vulnerabilidades dos adolescentes são destacadas na abordagem de saúde sexual e reprodutiva?",opts:["Apenas vulnerabilidades econômicas e de acesso a serviços","Vulnerabilidades sociais (desigualdade, pobreza), emocionais (identidade, autoestima), relacionais (pressão de pares) e de acesso à informação","Apenas vulnerabilidades genéticas e hereditárias","Vulnerabilidades restritas a adolescentes do sexo feminino"],a:1,exp:"As vulnerabilidades dos adolescentes são múltiplas: sociais (pobreza, violência, desigualdade), emocionais (construção de identidade, autoestima), relacionais (pressão de grupos), informacionais (desinformação sobre sexualidade) e de acesso a serviços de saúde."},
+  {topic:"adolesc",q:"No contexto da saúde reprodutiva, o enfermeiro promotor da saúde sexual na adolescência deve atuar em qual(is) área(s)?",opts:["Apenas prescrição de contraceptivos hormonais","Aconselhamento sobre sexualidade, escolha de métodos contraceptivos, prevenção de ISTs, prevenção de gravidez não planejada e consultas/sessões nas escolas","Realização de colposcopia e biópsia cervical","Diagnóstico e tratamento de ISTs exclusivamente"],a:1,exp:"O enfermeiro na saúde sexual e reprodutiva de adolescentes atua em: aconselhamento sobre sexualidade, escolha de métodos contraceptivos, prevenção de gravidez não planejada, prevenção de ISTs, e promoção da saúde em consultas e sessões nas escolas."},
+  {topic:"adolesc",q:"Qual é a importância de incluir as temáticas do PSE no Projeto Político Pedagógico (PPP) das escolas?",opts:["Facilita a cobrança de mensalidades específicas para ações de saúde","Favorece a incorporação das temáticas ao currículo escolar e permite participação da comunidade escolar nas decisões","Substitui a obrigatoriedade de consultas médicas preventivas","Permite ao enfermeiro substituir professores nas aulas de biologia"],a:1,exp:"A inclusão das temáticas do PSE no PPP é fundamental porque este documento retrata o projeto da escola e, ao incluir saúde no currículo, garante a continuidade das ações, permite a participação comunitária e torna a promoção de saúde parte da cultura escolar."},
+  {topic:"adolesc",q:"Qual é a relação entre a presença de sífilis e outras ISTs no adolescente?",opts:["A sífilis protege contra outras ISTs por gerar imunidade cruzada","A presença de sífilis facilita a transmissão e aquisição de outras ISTs (inclusive HIV), pois as lesões ulcerativas rompem a barreira mucosa","A sífilis só ocorre simultaneamente com gonorreia, não com outras ISTs","Não há relação entre sífilis e outras ISTs na adolescência"],a:1,exp:"A presença de úlceras e lesões da sífilis rompe as barreiras mucosas, facilitando significativamente a transmissão e aquisição de outras ISTs, incluindo o HIV. Por isso, o diagnóstico de uma IST deve sempre levar à investigação de outras."},
+  {topic:"adolesc",q:"O acolhimento humanizado do enfermeiro ao adolescente em serviços de saúde deve ser pautado por:",opts:["Julgamento moral das práticas sexuais para orientar comportamentos adequados","Sigilo, respeito à autonomia, ausência de julgamento, escuta ativa e linguagem adequada à faixa etária","Comunicação exclusiva com os responsáveis legais, sem envolvimento direto do adolescente","Realização de exames físicos completos sem consentimento como medida preventiva"],a:1,exp:"O acolhimento ao adolescente exige: sigilo (o adolescente tem direito à privacidade), ausência de julgamento moral, respeito à autonomia, escuta ativa e linguagem acessível. Isso favorece o vínculo, a adesão ao cuidado e a confiança no serviço de saúde."}
+];
+
+const topicLabelCrianca = {desnut:'Desnutrição', anemia:'Anemia Ferropriva', hipovit:'Hipovitaminose A', diarreia:'Diarreia/Desidratação', adolesc:'Saúde do Adolescente'};
+let answered_crianca = 0;
+let correct_crianca = 0;
+const questions_crianca_shuffled = shuffleArray(questions_crianca);
+
+function buildQuestionsCrianca() {
+  const c = document.getElementById('questions-container-crianca');
+  questions_crianca_shuffled.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'qc-' + i;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="q-num">Questão ${i+1} / 50 &mdash; <span style="color:var(--muted);font-weight:400">${topicLabelCrianca[q.topic]||q.topic}</span></div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="answerCrianca(${i},${j})" id="optc-${i}-${j}"><span class="opt-letter">${letters[j]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="fbc-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function answerCrianca(qi, oi) {
+  const q = questions_crianca_shuffled[qi];
+  const block = document.getElementById('qc-' + qi);
+  if (block.classList.contains('answered')) return;
+  block.classList.add('answered');
+  answered_crianca++;
+  const opts = block.querySelectorAll('.q-opt');
+  opts.forEach((o, j) => {
+    o.style.pointerEvents = 'none';
+    if (j === q.a) o.classList.add('correct');
+    else if (j === oi && oi !== q.a) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('fbc-' + qi);
+  if (oi === q.a) {
+    correct_crianca++;
+    fb.textContent = 'Correto! ' + q.exp;
+    fb.className = 'q-feedback show ok';
+  } else {
+    fb.textContent = 'Incorreto. ' + q.exp;
+    fb.className = 'q-feedback show fail';
+  }
+  document.getElementById('q-prog-crianca').textContent = answered_crianca + '/50';
+  document.getElementById('prog-bar-crianca').style.width = Math.round((answered_crianca/50)*100) + '%';
+  document.getElementById('crianca-correct').textContent = correct_crianca;
+  document.getElementById('crianca-wrong').textContent = answered_crianca - correct_crianca;
+  document.getElementById('crianca-nota').textContent = answered_crianca ? (correct_crianca/50*10).toFixed(1) : '—';
+}
+
+buildQuestionsCrianca();
 buildQuestionsBanco();
 buildQuestionsInf();
 buildQuestions();
