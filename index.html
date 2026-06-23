@@ -367,11 +367,11 @@
 
 <div class="hero">
   <div class="hero-badge">Revisão SAE · Enfermagem</div>
-  <h1>Deficiências Nutricionais<br>na Infância</h1>
-  <p>AIDIPI & CAB 33 · Ministério da Saúde / OMS</p>
+  <h1>Revisão para Provas</h1>
+  <p>Nutrição · Infecções · Saúde da Criança · Adolescente</p>
   <div class="hero-stats">
-    <div class="hstat"><div class="hstat-n">34</div><div class="hstat-l">Slides</div></div>
-    <div class="hstat"><div class="hstat-n">50</div><div class="hstat-l">Questões</div></div>
+    <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Módulos</div></div>
+    <div class="hstat"><div class="hstat-n">220</div><div class="hstat-l">Questões</div></div>
     <div class="hstat"><div class="hstat-n" id="score-display">0</div><div class="hstat-l">Acertos</div></div>
   </div>
 </div>
@@ -387,7 +387,6 @@
         <button class="tab" onclick="showSection('desnutricao',this)">Desnutrição</button>
         <button class="tab" onclick="showSection('micronut',this)">Micronut.</button>
         <button class="tab" onclick="showSection('saude',this)">LGBT+</button>
-        <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)">Infecções</button>
       </div>
     </div>
 
@@ -397,6 +396,7 @@
         <button class="tab" data-quiz="sae" onclick="showSection('questoes',this)">SAE</button>
         <button class="tab" data-quiz="banco" onclick="showSection('banco',this)">Banco</button>
         <button class="tab" data-quiz="crianca" onclick="showSection('crianca',this)">Criança</button>
+        <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)">Infecções</button>
       </div>
     </div>
 
@@ -1023,7 +1023,7 @@ function answer(qi, oi) {
     fb.className = 'q-feedback show fail';
   }
 
-  document.getElementById('score-display').textContent = correct;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
   document.getElementById('q-prog').textContent = answered + '/50';
   document.getElementById('prog-bar').style.width = Math.round((answered/50)*100) + '%';
   document.getElementById('sae-correct').textContent = correct;
@@ -1149,6 +1149,7 @@ function answerInf(qi, oi) {
   document.getElementById('inf-correct').textContent = correct_inf;
   document.getElementById('inf-wrong').textContent = answered_inf - correct_inf;
   document.getElementById('inf-nota').textContent = answered_inf ? (correct_inf/50*10).toFixed(1) : '—';
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
 }
 
 const questions_banco = [
@@ -1279,6 +1280,7 @@ function answerBanco(qi, oi) {
   document.getElementById('banco-correct').textContent = correct_banco;
   document.getElementById('banco-wrong').textContent = answered_banco - correct_banco;
   document.getElementById('banco-nota').textContent = answered_banco ? (correct_banco/70*10).toFixed(1) : '—';
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
 }
 
 const questions_crianca = [
@@ -1384,6 +1386,7 @@ function answerCrianca(qi, oi) {
   document.getElementById('crianca-correct').textContent = correct_crianca;
   document.getElementById('crianca-wrong').textContent = answered_crianca - correct_crianca;
   document.getElementById('crianca-nota').textContent = answered_crianca ? (correct_crianca/50*10).toFixed(1) : '—';
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
 }
 
 buildQuestionsCrianca();
