@@ -110,6 +110,7 @@
   .tab[data-quiz="infeccoes"].active { color: #f59e0b; border-bottom-color: #f59e0b; }
   .tab[data-quiz="banco"].active    { color: #a78bfa; border-bottom-color: #a78bfa; }
   .tab[data-quiz="crianca"].active  { color: #38bdf8; border-bottom-color: #38bdf8; }
+  .tab[data-quiz="cirurgico"].active { color: #f472b6; border-bottom-color: #f472b6; }
 
   /* ── GROUPED NAV ── */
   .nav-shell {
@@ -200,7 +201,9 @@
   .bar-infeccoes .score-bar { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
   .bar-banco .score-bar    { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
   .bar-crianca .score-bar  { background: linear-gradient(90deg, #38bdf8, #7dd3fc); }
+  .bar-cirurgico .score-bar { background: linear-gradient(90deg, #f472b6, #f9a8d4); }
   .accent-crianca { color: #38bdf8; }
+  .accent-cirurgico { color: #f472b6; }
 
   /* ── CONTENT ── */
   .content { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
@@ -371,7 +374,7 @@
   <p>Nutrição · Infecções · Saúde da Criança · Adolescente</p>
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Módulos</div></div>
-    <div class="hstat"><div class="hstat-n">220</div><div class="hstat-l">Questões</div></div>
+    <div class="hstat"><div class="hstat-n">270</div><div class="hstat-l">Questões</div></div>
     <div class="hstat"><div class="hstat-n" id="score-display">0</div><div class="hstat-l">Acertos</div></div>
   </div>
 </div>
@@ -397,6 +400,7 @@
         <button class="tab" data-quiz="banco" onclick="showSection('banco',this)">Banco</button>
         <button class="tab" data-quiz="crianca" onclick="showSection('crianca',this)">Criança</button>
         <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)">Infecções</button>
+        <button class="tab" data-quiz="cirurgico" onclick="showSection('cirurgico',this)">Cirúrgico</button>
       </div>
     </div>
 
@@ -910,6 +914,27 @@
   <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
 </div>
 
+<!-- ══════════════════════════════════════════════════════ BLOCO CIRÚRGICO -->
+<div id="cirurgico" class="content section">
+
+  <div class="sticky-progress">
+    <div class="sp-title accent-cirurgico">Questões — Bloco Cirúrgico</div>
+    <div class="sp-bar-row bar-cirurgico">
+      <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-cirurgico" style="width:0%"></div></div>
+      <span class="sp-prog accent-cirurgico" id="q-prog-cirurgico">0/50</span>
+    </div>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="cirurgico-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="cirurgico-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="cirurgico-nota">—</span></span>
+    </div>
+  </div>
+
+  <div id="questions-container-cirurgico"></div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
 <script>
 const questions = [
   {q:"Qual a taxa nacional de mortalidade infantil do Brasil em 2024?",opts:["10,4/mil NV","11,5/mil NV","12,6/mil NV","15,7/mil NV"],a:2,exp:"A taxa nacional em 2024 é 12,6/mil NV, estagnada desde 2022. O recorde histórico mais baixo foi 11,5 em 2020."},
@@ -1023,7 +1048,7 @@ function answer(qi, oi) {
     fb.className = 'q-feedback show fail';
   }
 
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
   document.getElementById('q-prog').textContent = answered + '/50';
   document.getElementById('prog-bar').style.width = Math.round((answered/50)*100) + '%';
   document.getElementById('sae-correct').textContent = correct;
@@ -1149,7 +1174,7 @@ function answerInf(qi, oi) {
   document.getElementById('inf-correct').textContent = correct_inf;
   document.getElementById('inf-wrong').textContent = answered_inf - correct_inf;
   document.getElementById('inf-nota').textContent = answered_inf ? (correct_inf/50*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
 }
 
 const questions_banco = [
@@ -1280,7 +1305,7 @@ function answerBanco(qi, oi) {
   document.getElementById('banco-correct').textContent = correct_banco;
   document.getElementById('banco-wrong').textContent = answered_banco - correct_banco;
   document.getElementById('banco-nota').textContent = answered_banco ? (correct_banco/70*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
 }
 
 const questions_crianca = [
@@ -1386,9 +1411,118 @@ function answerCrianca(qi, oi) {
   document.getElementById('crianca-correct').textContent = correct_crianca;
   document.getElementById('crianca-wrong').textContent = answered_crianca - correct_crianca;
   document.getElementById('crianca-nota').textContent = answered_crianca ? (correct_crianca/50*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
 }
 
+const questions_cirurgico = [
+  {topic:"periop",q:"Qual é o período correto do pré-operatório MEDIATO?",opts:["Nas 24 horas que antecedem a cirurgia","Da indicação cirúrgica até 24 horas antes do procedimento","Do momento da internação até a entrada no CC","Da indução anestésica até o fechamento da incisão"],a:1,exp:"O pré-operatório mediato começa na indicação cirúrgica e vai até 24 horas antes da cirurgia. Foco: exames, orientações e preparo psicológico. O imediato são as últimas 24 horas antes do CC."},
+  {topic:"periop",q:"Qual é o foco principal do pré-operatório IMEDIATO?",opts:["Realização de exames laboratoriais e consultas especializadas","Preparo psicológico e educação em saúde","Jejum, higiene corporal, retirada de adornos/próteses e confirmação do consentimento","Avaliação de comorbidades e ajuste de medicações crônicas"],a:2,exp:"O pré-operatório imediato (últimas 24h antes do CC) foca em: confirmar jejum, higiene corporal, retirada de adornos e esmalte, checar consentimento e prontuário, administrar medicações prescritas."},
+  {topic:"periop",q:"Qual das alternativas descreve corretamente o período TRANSOPERATÓRIO?",opts:["Da indicação cirúrgica até a entrada no CC","Das 24h anteriores à cirurgia até o início da anestesia","Da entrada no CC até a saída para a recuperação anestésica","Da saída da SRPA até a alta hospitalar"],a:2,exp:"O transoperatório vai da entrada do paciente no CC até a saída para a Sala de Recuperação Pós-Anestésica (SRPA). Inclui a indução anestésica, o ato cirúrgico e a extubação."},
+  {topic:"periop",q:"O pós-operatório IMEDIATO compreende:",opts:["As primeiras 24 horas após a cirurgia","De 24h a 7 dias após a cirurgia","Da alta da SRPA até 30 dias","Do momento em que o paciente deixa o CC até a alta hospitalar"],a:0,exp:"O pós-operatório imediato (POI) corresponde às primeiras 24 horas após a cirurgia. É o período de maior risco para complicações como hemorragia, hipotermia, náuseas, dor e depressão respiratória."},
+  {topic:"periop",q:"Um dos três momentos do Checklist de Cirurgia Segura da OMS ocorre ANTES DA INCISÃO e é denominado:",opts:["Sign In","Time Out","Sign Out","Check Up"],a:1,exp:"Os 3 momentos são: Sign In (antes da indução anestésica), Time Out (antes da incisão — pausa em voz alta com toda a equipe) e Sign Out (antes de o paciente sair da sala)."},
+  {topic:"periop",q:"No Sign In do Checklist da OMS, o que deve ser verificado?",opts:["Contagem de compressas, agulhas e instrumentais","Apresentação de toda a equipe cirúrgica","Identidade do paciente, sítio cirúrgico, consentimento, alergias e risco de perda sanguínea","Identificação de amostras de biópsia e registro do procedimento"],a:2,exp:"O Sign In (antes da anestesia) verifica: identidade do paciente, confirmação do procedimento e local cirúrgico, consentimento assinado, marcação de lateralidade, alergias e risco de perda sanguínea."},
+  {topic:"periop",q:"O que deve ser verificado no Sign Out do Checklist cirúrgico?",opts:["Confirmação de identidade, sítio e consentimento","Verificação de alergias e comorbidades do paciente","Contagem de compressas/instrumentais, identificação de amostras e registro de problemas com equipamentos","Profilaxia antibiótica e disponibilidade de hemoderivados"],a:2,exp:"O Sign Out (antes do paciente sair da sala) verifica: contagem correta de compressas, agulhas e instrumentais; identificação de amostras de biópsia; registro de problemas e cuidados pós-operatórios."},
+  {topic:"periop",q:"Qual é o objetivo principal da Lista de Verificação de Cirurgia Segura?",opts:["Agilizar o tempo cirúrgico e reduzir custos hospitalares","Reduzir erros e eventos adversos, garantindo comunicação eficaz e segurança do paciente","Substituir a necessidade de prontuário completo antes da cirurgia","Definir responsabilidades jurídicas da equipe cirúrgica"],a:1,exp:"A Lista de Verificação de Cirurgia Segura da OMS (2009) reduz complicações e mortalidade ao garantir: confirmação de identidade e procedimento, comunicação eficaz entre equipe e verificação de materiais."},
+  {topic:"periop",q:"Quais são os quatro tempos cirúrgicos na ordem correta?",opts:["Síntese, Diérese, Hemostasia, Exérese","Hemostasia, Diérese, Exérese, Síntese","Diérese, Hemostasia, Exérese, Síntese","Exérese, Diérese, Síntese, Hemostasia"],a:2,exp:"Macete D-H-E-S: Diérese (abrir/cortar), Hemostasia (controlar sangramento), Exérese (retirar), Síntese (fechar). Essa sequência é a base de qualquer procedimento cirúrgico."},
+  {topic:"periop",q:"Na colecistectomia, a retirada da vesícula biliar corresponde a qual tempo cirúrgico?",opts:["Diérese","Hemostasia","Exérese","Síntese"],a:2,exp:"A Exérese é o tempo de retirada parcial ou total de um órgão, tecido ou lesão. Na colecistectomia, a remoção da vesícula biliar é o tempo de exérese."},
+  {topic:"paramentacao",q:"Qual é a sequência CORRETA da paramentação cirúrgica estéril?",opts:["Gorro → Máscara → Degermação → Avental → Luvas","Luvas → Avental → Degermação → Gorro → Máscara","Degermação → Gorro → Máscara → Avental → Luvas","Máscara → Gorro → Luvas → Avental → Degermação"],a:0,exp:"Sequência correta: (1) Retirar adornos, (2) Vestir gorro e máscara, (3) Degermação das mãos, (4) Secar com compressa estéril, (5) Vestir avental estéril, (6) Calçar luvas estéreis, (7) Manter mãos acima da cintura."},
+  {topic:"paramentacao",q:"Por que as mãos devem permanecer acima da cintura e à frente do corpo após a paramentação?",opts:["Para facilitar a movimentação na sala cirúrgica","Para evitar contaminação, pois a área abaixo da cintura é considerada não estéril","Para melhorar a ergonomia durante o procedimento","Para que o circulante possa visualizar e controlar os EPIs"],a:1,exp:"Após a paramentação, a área estéril compreende frente do tórax (peito até a mesa) e as mãos. A área abaixo da cintura é considerada não estéril — por isso as mãos devem permanecer visíveis, acima da cintura."},
+  {topic:"paramentacao",q:"Qual é o objetivo da degermação cirúrgica das mãos?",opts:["Eliminar totalmente todos os microrganismos da pele","Reduzir a flora microbiana transitória e residente, prevenindo infecções do sítio cirúrgico","Substituir o uso de luvas cirúrgicas estéreis","Preparar a pele do paciente para a antissepsia"],a:1,exp:"A degermação cirúrgica reduz significativamente a flora transitória (elimina) e a flora residente (diminui), criando barreira protetora que persiste mesmo após o calçamento das luvas, prevenindo ISC caso ocorra perfuração de luva."},
+  {topic:"paramentacao",q:"Durante a degermação cirúrgica, em qual direção deve ocorrer o enxágue?",opts:["Dos cotovelos em direção às pontas dos dedos","Das pontas dos dedos em direção aos cotovelos","De forma circular, sem direção definida","Apenas das mãos, sem enxaguar os antebraços"],a:1,exp:"O enxágue deve ser das pontas dos dedos (área mais limpa) em direção aos cotovelos (área menos limpa), para que a água escorra da região limpa para a suja, evitando recontaminação."},
+  {topic:"paramentacao",q:"Após a degermação, as mãos são secas com qual material?",opts:["Toalha de papel absorvente descartável","Compressa ou toalha estéril, iniciando pelas mãos e seguindo para os antebraços","Ar quente de secador não estéril","Qualquer toalha limpa disponível na sala cirúrgica"],a:1,exp:"As mãos devem ser secas com compressa ESTÉRIL, iniciando pelas mãos e seguindo para os antebraços (do mais limpo para o menos limpo), mantendo a técnica asséptica conquistada na degermação."},
+  {topic:"instrumental",q:"Qual instrumento cirúrgico é utilizado na fase de DIÉRESE para corte delicado de tecidos?",opts:["Pinça Kelly","Tesoura de Metzenbaum","Afastador de Farabeuf","Porta-agulhas Mayo-Hegar"],a:1,exp:"A Tesoura de Metzenbaum é utilizada para corte delicado de tecidos. A Tesoura de Mayo corta tecidos mais espessos e fios. Ambas pertencem ao tempo de diérese."},
+  {topic:"instrumental",q:"As Pinças Kelly e Crile são instrumentais de qual tempo cirúrgico?",opts:["Diérese","Hemostasia","Exérese","Síntese"],a:1,exp:"Pinças Kelly e Crile são pinças hemostáticas curvas usadas na HEMOSTASIA para clampeamento de vasos. A Pinça Halsted (Mosquito) também é hemostática, indicada para pequenos vasos."},
+  {topic:"instrumental",q:"Qual instrumental cirúrgico é indicado para AFASTAMENTO abdominal profundo?",opts:["Afastador de Farabeuf","Afastador Gosset","Afastador de Doyen","Afastador de Weitlaner"],a:1,exp:"O Afastador Gosset é indicado para afastamento abdominal estático (fixo). O Farabeuf é para afastamento superficial e o Doyen para afastamento abdominal dinâmico."},
+  {topic:"instrumental",q:"O Porta-agulhas Mayo-Hegar pertence a qual tempo cirúrgico?",opts:["Diérese","Hemostasia","Exérese","Síntese"],a:3,exp:"O Porta-agulhas Mayo-Hegar é o instrumental utilizado na SÍNTESE para segurar a agulha de sutura durante o fechamento dos tecidos. A Pinça Mathieu tem função similar de auxiliar na sutura."},
+  {topic:"instrumental",q:"A Pinça Anatômica (sem dente) é indicada para:",opts:["Hemostasia de grandes vasos","Segurar tecidos delicados sem causar trauma excessivo","Afastamento profundo de vísceras","Realização de suturas em pele resistente"],a:1,exp:"A Pinça Anatômica (sem dente) é usada para manipular tecidos delicados, evitando trauma excessivo. A Pinça Dente de Rato (com dente) proporciona maior fixação em tecidos mais resistentes."},
+  {topic:"instrumental",q:"O Finochietto é um afastador indicado especificamente para:",opts:["Cirurgias abdominais de grande porte","Cirurgia torácica (abertura do tórax)","Neurocirurgias e craniectomias","Cirurgias ortopédicas de membros inferiores"],a:1,exp:"O Afastador Finochietto é um afastador costal autoestático utilizado em cirurgias torácicas para manter as costelas afastadas, proporcionando acesso ao campo cirúrgico intratorácico."},
+  {topic:"eletrocirurgia",q:"O que é eletrocirurgia?",opts:["Técnica de monitorização cardíaca contínua durante o ato cirúrgico","Técnica que utiliza corrente elétrica de alta frequência para cortar tecidos e coagular vasos","Método de esterilização de instrumentais com energia elétrica","Sistema de climatização da sala operatória"],a:1,exp:"A eletrocirurgia utiliza corrente elétrica de alta frequência para: cortar tecidos com precisão (efeito de corte) e coagular vasos sanguíneos (efeito de coagulação), reduzindo o sangramento durante o procedimento."},
+  {topic:"eletrocirurgia",q:"No bisturi elétrico MONOPOLAR, como a corrente elétrica circula?",opts:["Apenas entre as duas pontas da pinça ativa","Do eletrodo ativo, pelo corpo do paciente, até a placa de retorno (placa neutra)","Do eletrodo para o cirurgião e retorna ao gerador","Diretamente entre o bisturi e o campo cirúrgico, sem placa de retorno"],a:1,exp:"No monopolar, a corrente sai do eletrodo ativo (bisturi), percorre o corpo do paciente e retorna ao gerador pela placa neutra (dispersiva). Por isso exige posicionamento correto da placa para evitar queimaduras."},
+  {topic:"eletrocirurgia",q:"Qual é a principal vantagem do bisturi elétrico BIPOLAR em relação ao monopolar?",opts:["Maior potência de corte e coagulação","Corrente circula apenas entre as pontas da pinça, sem atravessar o corpo — maior precisão e menor risco de queimaduras","Dispensa a necessidade de degermação das mãos","Pode ser usado sem anestesia geral"],a:1,exp:"O bisturi bipolar tem a corrente circulando apenas entre as duas pontas da pinça, sem traversar o organismo. Isso garante maior precisão, menor risco de queimadura e é indicado para microcirurgias e neurocirurgias."},
+  {topic:"eletrocirurgia",q:"Para prevenir queimaduras com bisturi elétrico, a placa dispersiva deve ser posicionada:",opts:["Sempre no braço direito do paciente","Em área muscular bem perfundida, próxima ao sítio cirúrgico, com toda a superfície em contato com a pele seca e íntegra","Na cabeceira do paciente, sobre o colchão","Não importa o posicionamento, pois queimaduras são impossíveis com equipamento moderno"],a:1,exp:"A placa dispersiva deve ser posicionada em área muscular bem perfundida (coxa, glúteo), próxima ao campo cirúrgico, com toda a superfície em contato adequado com pele íntegra e seca. Má fixação causa queimaduras."},
+  {topic:"eletrocirurgia",q:"Qual das alternativas sobre o bisturi elétrico está INCORRETA?",opts:["O monopolar requer placa de retorno posicionada no paciente","O bipolar realiza corte e coagulação através do mesmo eletrodo ativo, sem placa de retorno","O bisturi elétrico não oferece nenhum risco de queimadura ao paciente","O bipolar é mais indicado para cirurgias que exigem maior precisão"],a:2,exp:"É INCORRETO afirmar que o bisturi elétrico não oferece risco de queimadura. O principal risco é justamente a queimadura por: má posição da placa neutra, contato com objetos metálicos, excesso de potência ou pele úmida."},
+  {topic:"drenos",q:"Qual é o principal objetivo da drenagem cirúrgica?",opts:["Substituir o curativo nas primeiras 24 horas após a cirurgia","Remover secreções, sangue, ar ou fluidos acumulados na cavidade cirúrgica, prevenindo infecção e hematomas","Administrar medicamentos diretamente no sítio cirúrgico","Medir a pressão intracavitária durante o pós-operatório"],a:1,exp:"Os drenos removem secreções, sangue, ar ou fluidos do sítio cirúrgico, prevenindo acúmulos que causariam infecção, hematoma ou seroma. Também permitem avaliar o tipo e volume de drenagem para detectar complicações."},
+  {topic:"drenos",q:"O dreno Portovac é classificado como:",opts:["Sistema aberto, com drenagem por gravidade","Sistema fechado, com pressão negativa (vácuo)","Sistema semifechado, com válvula unidirecional","Sistema misto, aberto e fechado conforme o volume drenado"],a:1,exp:"O Portovac é um sistema FECHADO de drenagem por pressão negativa (vácuo). O reservatório comprimido gera sucção contínua, coletando secreção de forma eficiente e com menor risco de contaminação."},
+  {topic:"drenos",q:"O dreno Jackson-Pratt (JP) é reconhecido por:",opts:["Ser um tubo torácico rígido conectado a selo d'água","Ter reservatório em formato de pera, com sistema fechado de pressão negativa","Ser um dreno de Penrose, aberto e passivo","Ser exclusivamente utilizado em cirurgias cardíacas"],a:1,exp:"O Jackson-Pratt tem reservatório em formato de pera (bulbo), que é comprimido para criar pressão negativa e expandido para coletar secreção. É sistema fechado, reduzindo risco de infecção."},
+  {topic:"drenos",q:"O dreno de Penrose é classificado como sistema:",opts:["Fechado com pressão negativa","Fechado com selo d'água","Aberto e passivo (drena por gravidade e capilaridade)","Semiaberto com reservatório coletável"],a:2,exp:"O dreno de Penrose é um sistema ABERTO e passivo: é um tubo de látex macio que drena por gravidade e capilaridade, sem reservatório. Maior risco de contaminação por ser aberto ao ambiente."},
+  {topic:"drenos",q:"Qual NÃO é um cuidado de enfermagem recomendado com drenos cirúrgicos?",opts:["Manter a permeabilidade do dreno","Controlar quantidade, cor e aspecto da drenagem","Evitar tração e acomodação adequada do dreno","Pinçar o dreno de forma sistemática para reduzir o volume drenado"],a:3,exp:"Pinçar o dreno de rotina NÃO é recomendado, pois pode causar acúmulo de secreção, aumentar pressão e levar a complicações. Os cuidados corretos são: manter permeabilidade, evitar tração, fazer curativo e registrar drenagem."},
+  {topic:"fios",q:"Os fios cirúrgicos ABSORVÍVEIS são aqueles que:",opts:["Permanecem indefinidamente no organismo sem reação tecidual","São degradados e digeridos pelo organismo (hidrólise ou fagocitose)","Resistem à digestão enzimática e são removidos por sutura de retirada","São feitos exclusivamente de materiais sintéticos"],a:1,exp:"Fios absorvíveis são degradados pelo organismo por hidrólise ou fagocitose. Exemplos: Catgut (natural) e Poliglactina 910/Vicryl (sintético). São indicados para suturas internas onde não é possível remover o fio."},
+  {topic:"fios",q:"Qual das alternativas apresenta APENAS fios não absorvíveis?",opts:["Catgut simples, Vicryl, Monocryl","Nylon, Seda, Algodão, Polipropileno","Catgut cromado, Poliglactina, Polidiaxonona","Poliglecaprone, Poliglactina, Catgut"],a:1,exp:"Fios NÃO absorvíveis resistem à digestão do organismo: Nylon (Mononylon), Seda, Algodão, Polipropileno (Prolene), Poliéster, Aço. São usados em pele (podem ser removidos) ou estruturas que exigem suporte permanente."},
+  {topic:"fios",q:"Os fios MONOFILAMENTARES têm como vantagem:",opts:["Maior flexibilidade e facilidade de manuseio","Menor risco de infecção e menor trauma tecidual por não apresentar interstícios","Maior resistência à tração por serem compostos de múltiplos filamentos","Maior memória e rigidez facilitam o nó cirúrgico"],a:1,exp:"Fios monofilamentares (único filamento) têm menor risco de infecção pois não possuem interstícios para abrigar bactérias e causam menos trauma. Desvantagem: maior memória (tende a voltar à forma) e manuseio mais difícil."},
+  {topic:"fios",q:"Os fios MULTIFILAMENTARES (trançados) apresentam como principal desvantagem:",opts:["Menor resistência à tração quando comparados ao monofilamento","Menor flexibilidade, dificultando a realização de nós","Maior capilaridade e risco de infecção por possuírem interstícios entre os filamentos","Absorção mais lenta pelo organismo"],a:2,exp:"Fios multifilamentares (trançados) têm entre os filamentos espaços (capilaridade) que podem albergar bactérias, aumentando o risco de infecção. Vantagens: maior flexibilidade, melhor manuseio e nó mais seguro."},
+  {topic:"fios",q:"Uma característica IDEAL de um fio cirúrgico é:",opts:["Alta reação tecidual para estimular a cicatrização","Baixa resistência à tração para facilitar o nó","Esterilidade, baixa reação tecidual, alta resistência à tração e boa segurança do nó","Alta capilaridade para facilitar a drenagem de secreções"],a:2,exp:"As características ideais de um fio cirúrgico incluem: esterilidade, alta resistência à tração, baixa reação tecidual, boa segurança do nó, fácil manuseio, flexibilidade, baixa capilaridade e disponibilidade em vários calibres."},
+  {topic:"seguranca",q:"Qual é a Escala utilizada para avaliar o nível de consciência e recuperação anestésica no pós-operatório imediato (SRPA)?",opts:["Escala de Glasgow","Escala de Braden","Escala de Aldrete e Kroulik","Escala de Ramsey"],a:2,exp:"A Escala de Aldrete e Kroulik avalia: atividade muscular, respiração, circulação, consciência e coloração da pele/SatO². Pontuação ≥ 8 permite alta da SRPA. É a escala mais cobrada em provas sobre pós-operatório."},
+  {topic:"seguranca",q:"Na Escala de Aldrete e Kroulik, qual é o escore mínimo para alta da SRPA?",opts:["6","7","8","10"],a:2,exp:"O escore mínimo para alta da SRPA pela Escala de Aldrete e Kroulik é 8 (de no máximo 10). Cada parâmetro (atividade, respiração, circulação, consciência, saturação) é pontuado de 0 a 2."},
+  {topic:"seguranca",q:"A Classificação ASA (American Society of Anesthesiologists) avalia:",opts:["O risco cirúrgico com base no estado físico do paciente","O nível de sedação e recuperação anestésica na SRPA","O risco de infecção do sítio cirúrgico","A escolha do tipo de fio cirúrgico conforme a especialidade"],a:0,exp:"A Classificação ASA avalia o estado físico do paciente para determinar o risco anestésico-cirúrgico. ASA I (saudável) a ASA VI (morte cerebral/doador de órgãos). ASA E indica cirurgia de emergência."},
+  {topic:"seguranca",q:"Um paciente com doença sistêmica GRAVE (risco de vida) é classificado como:",opts:["ASA I","ASA II","ASA III","ASA IV"],a:3,exp:"ASA IV = paciente com doença sistêmica grave que representa risco constante à vida. ASA I = saudável; ASA II = doença sistêmica discreta; ASA III = doença sistêmica grave sem risco imediato; ASA V = moribundo."},
+  {topic:"seguranca",q:"Cinco cuidados essenciais no pós-operatório imediato (POI) incluem:",opts:["Realizar fisioterapia motora, dieta oral plena, alta hospitalar precoce, sutura e retorno ambulatorial","Monitorar SV, avaliar nível de consciência (Aldrete), controlar a dor, checar ferida/drenos e prevenir hipotermia","Administrar antibiótico profilático, realizar tricotomia, confirmar identidade, checar jejum e aplicar checklist","Preparar sala cirúrgica, instrumentar cirurgião, esterilizar materiais, aplicar degermação e realizar contagem"],a:1,exp:"Os 5 cuidados vitais no POI são: (1) Monitorar SV (PA, FC, FR, SatO²), (2) Avaliar consciência com Aldrete, (3) Controlar dor, (4) Checar ferida operatória e drenos, (5) Prevenir hipotermia com mantas térmicas."},
+  {topic:"seguranca",q:"Paciente no pós-operatório apresenta hipotensão, taquicardia e pele fria. Qual é a principal suspeita e conduta IMEDIATA da enfermagem?",opts:["Embolia pulmonar; posicionar em Fowler e administrar anticoagulante","Reação alérgica; administrar adrenalina e anti-histamínico","Choque hipovolêmico; acionar médico, Trendelenburg, oxigenioterapia e garantir acesso venoso calibroso","Infecção de sítio cirúrgico; colher hemocultura e iniciar antibiótico"],a:2,exp:"Hipotensão + taquicardia + pele fria no pós-op = Choque Hipovolêmico (hemorragia). Conduta: acionar médico imediatamente, posicionar em Trendelenburg (elevar MMII), oxigenioterapia, acessos venosos calibrosos para reposição volêmica."},
+  {topic:"infecção",q:"Qual é o principal agente causador da Infecção de Sítio Cirúrgico (ISC)?",opts:["Pseudomonas aeruginosa","Staphylococcus aureus (incluindo MRSA)","Candida albicans","Streptococcus pneumoniae"],a:1,exp:"O Staphylococcus aureus (incluindo cepas resistentes — MRSA) é o principal agente causador de ISC. A higienização das mãos e a técnica asséptica rigorosa são as principais medidas preventivas."},
+  {topic:"infecção",q:"Em qual momento deve ser realizada a antibioticoprofilaxia cirúrgica para ser eficaz?",opts:["No momento da indução anestésica ou até 60 minutos antes da incisão","12 horas antes da cirurgia","Apenas no pós-operatório imediato, ao término do procedimento","3 horas após a incisão cirúrgica"],a:0,exp:"A antibioticoprofilaxia deve ser administrada no máximo 60 minutos antes da incisão cirúrgica (preferencialmente na indução anestésica) para garantir concentração tecidual adequada no momento da contaminação."},
+  {topic:"infecção",q:"Qual tipo de tricotomia é RECOMENDADO para preparo da pele antes da cirurgia?",opts:["Lâmina de barbear na noite anterior à cirurgia","Depilação química com creme depilatório","Tricotomizador elétrico (aparador), realizado imediatamente antes da cirurgia","A tricotomia deve ser evitada; se necessária, usar lâmina descartável no CC"],a:2,exp:"A recomendação é usar tricotomizador elétrico (aparador), apenas quando necessário e o mais próximo possível da cirurgia (na sala do CC). Lâminas criam microlesões que aumentam o risco de ISC."},
+  {topic:"infecção",q:"Quais são fatores de risco do PACIENTE para Infecção de Sítio Cirúrgico?",opts:["Tempo cirúrgico curto e técnica asséptica adequada","Diabetes mellitus, obesidade, tabagismo, desnutrição e imunossupressão","Uso correto de EPIs pela equipe cirúrgica","Temperatura adequada da sala operatória"],a:1,exp:"Fatores de risco relacionados ao paciente para ISC incluem: diabetes mellitus, obesidade, tabagismo, desnutrição, imunossupressão, infecção à distância pré-op e má higiene corporal."},
+  {topic:"infecção",q:"Cinco medidas de biossegurança fundamentais no bloco cirúrgico são:",opts:["Uso de jaleco, calçado fechado, gorro, etiqueta de identificação e cartão do plano de saúde","Higienização das mãos, uso de EPIs, esterilização dos materiais, descarte correto de perfurocortantes e limpeza/desinfecção das superfícies","Treinamento anual, reuniões de equipe, protocolos digitais, auditorias e acreditação hospitalar","Checklist, antibioticoprofilaxia, tricotomia, posicionamento e monitorização"],a:1,exp:"As 5 medidas de biossegurança fundamentais no CC são: (1) Higienização das mãos, (2) Uso de EPIs, (3) Esterilização dos materiais, (4) Descarte correto de perfurocortantes, (5) Limpeza e desinfecção das superfícies."},
+  {topic:"infecção",q:"Como o enfermeiro CIRCULANTE contribui para a prevenção de ISC?",opts:["Realizando a antissepsia da pele do paciente com campo estéril","Controlando o tráfego de pessoas na sala, garantindo que a porta fique fechada e monitorando a técnica asséptica da equipe","Entregando instrumentais ao cirurgião e realizando contagem de compressas","Aplicando degermação cirúrgica e vestindo avental estéril para entrar no campo"],a:1,exp:"O circulante (fora do campo estéril) previne ISC ao: controlar o tráfego de pessoas, manter a porta fechada, observar quebras de técnica asséptica, garantir abertura correta de embalagens estéreis e registrar eventos."},
+  {topic:"equipe",q:"Qual é a função do enfermeiro INSTRUMENTADOR durante o transoperatório?",opts:["Permanecer fora do campo estéril e fornecer materiais não estéreis","Organizar a mesa cirúrgica, entregar instrumentais ao cirurgião, manter técnica asséptica e realizar contagem de instrumentos/compressas","Monitorar sinais vitais e administrar medicações prescritas","Garantir que a documentação cirúrgica esteja completa"],a:1,exp:"O instrumentador (dentro do campo estéril): organiza e prepara a mesa cirúrgica, entrega instrumentais ao cirurgião na sequência correta, mantém técnica asséptica e realiza contagem de instrumentos, agulhas e compressas."},
+  {topic:"equipe",q:"Qual é a função do enfermeiro CIRCULANTE durante o transoperatório?",opts:["Operar dentro do campo estéril ao lado do cirurgião","Permanece FORA do campo estéril: fornece materiais, registra informações, auxilia no posicionamento e supervisiona a segurança geral","Realizar a intubação orotraqueal junto ao anestesiologista","Organizar a mesa cirúrgica e entregar os instrumentais"],a:1,exp:"O circulante permanece FORA do campo estéril: fornece materiais não estéreis, registra informações no prontuário, auxilia no posicionamento do paciente, controla temperatura da sala e supervisiona a segurança geral."},
+  {topic:"equipe",q:"No pré-operatório imediato, quais são as três verificações ESSENCIAIS da enfermagem?",opts:["Verificar alergias, escolher o fio cirúrgico e preparar a mesa do instrumentador","Identificação correta do paciente, verificação do jejum e conferência dos exames/consentimento","Confirmar o diagnóstico médico, revisar o plano anestésico e orientar a família","Realizar a degermação, vestir avental estéril e calçar luvas antes de receber o paciente"],a:1,exp:"Os três cuidados essenciais no pré-operatório imediato são: (1) Identificação correta do paciente (pulseira/prontuário), (2) Verificação do jejum, (3) Conferência de exames e consentimento cirúrgico assinado."},
+  {topic:"equipe",q:"Qual das afirmativas sobre as responsabilidades de enfermagem no pós-operatório está CORRETA?",opts:["O enfermeiro pode liberar o paciente da SRPA sem avaliação médica desde que o Aldrete seja ≥ 6","O enfermeiro monitora SV, avalia consciência, controla dor, observa ferida/drenos e incentiva exercícios respiratórios","O enfermeiro instrumentador é responsável pela monitorização do pós-operatório","No pós-operatório tardio, a responsabilidade de enfermagem é exclusivamente ambulatorial"],a:1,exp:"No POI, o enfermeiro: monitora SV e SatO², aplica Escala de Aldrete, controla dor, avalia ferida e drenos, previne hipotermia, incentiva exercícios respiratórios e registra toda a evolução do paciente."}
+];
+
+const topicLabelCirurgico = {periop:'Perioperatório', paramentacao:'Paramentação', instrumental:'Instrumental', eletrocirurgia:'Eletrocirurgia', drenos:'Drenos', fios:'Fios Cirúrgicos', seguranca:'Segurança', infecção:'Prevenção de ISC', equipe:'Equipe Cirúrgica'};
+let answered_cirurgico = 0;
+let correct_cirurgico = 0;
+const questions_cirurgico_shuffled = shuffleArray(questions_cirurgico);
+
+function buildQuestionsCirurgico() {
+  const c = document.getElementById('questions-container-cirurgico');
+  questions_cirurgico_shuffled.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'qcir-' + i;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="q-num">Questão ${i+1} / 50 &mdash; <span style="color:var(--muted);font-weight:400">${topicLabelCirurgico[q.topic]||q.topic}</span></div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="answerCirurgico(${i},${j})" id="optcir-${i}-${j}"><span class="opt-letter">${letters[j]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="fbcir-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function answerCirurgico(qi, oi) {
+  const q = questions_cirurgico_shuffled[qi];
+  const block = document.getElementById('qcir-' + qi);
+  if (block.classList.contains('answered')) return;
+  block.classList.add('answered');
+  answered_cirurgico++;
+  const opts = block.querySelectorAll('.q-opt');
+  opts.forEach((o, j) => {
+    o.style.pointerEvents = 'none';
+    if (j === q.a) o.classList.add('correct');
+    else if (j === oi && oi !== q.a) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('fbcir-' + qi);
+  if (oi === q.a) {
+    correct_cirurgico++;
+    fb.textContent = 'Correto! ' + q.exp;
+    fb.className = 'q-feedback show ok';
+  } else {
+    fb.textContent = 'Incorreto. ' + q.exp;
+    fb.className = 'q-feedback show fail';
+  }
+  document.getElementById('q-prog-cirurgico').textContent = answered_cirurgico + '/50';
+  document.getElementById('prog-bar-cirurgico').style.width = Math.round((answered_cirurgico/50)*100) + '%';
+  document.getElementById('cirurgico-correct').textContent = correct_cirurgico;
+  document.getElementById('cirurgico-wrong').textContent = answered_cirurgico - correct_cirurgico;
+  document.getElementById('cirurgico-nota').textContent = answered_cirurgico ? (correct_cirurgico/50*10).toFixed(1) : '—';
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+}
+
+buildQuestionsCirurgico();
 buildQuestionsCrianca();
 buildQuestionsBanco();
 buildQuestionsInf();
