@@ -111,6 +111,7 @@
   .tab[data-quiz="banco"].active    { color: #a78bfa; border-bottom-color: #a78bfa; }
   .tab[data-quiz="crianca"].active  { color: #38bdf8; border-bottom-color: #38bdf8; }
   .tab[data-quiz="cirurgico"].active { color: #f472b6; border-bottom-color: #f472b6; }
+  .tab[data-quiz="slides"].active    { color: #fb923c; border-bottom-color: #fb923c; }
 
   /* ── GROUPED NAV ── */
   .nav-shell {
@@ -202,8 +203,10 @@
   .bar-banco .score-bar    { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
   .bar-crianca .score-bar  { background: linear-gradient(90deg, #38bdf8, #7dd3fc); }
   .bar-cirurgico .score-bar { background: linear-gradient(90deg, #f472b6, #f9a8d4); }
-  .accent-crianca { color: #38bdf8; }
+  .bar-slides .score-bar    { background: linear-gradient(90deg, #fb923c, #fdba74); }
+  .accent-crianca   { color: #38bdf8; }
   .accent-cirurgico { color: #f472b6; }
+  .accent-slides    { color: #fb923c; }
 
   /* ── CONTENT ── */
   .content { padding: 1.25rem; max-width: 680px; margin: 0 auto; }
@@ -374,7 +377,7 @@
   <p>Nutrição · Infecções · Saúde da Criança · Adolescente</p>
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Módulos</div></div>
-    <div class="hstat"><div class="hstat-n">270</div><div class="hstat-l">Questões</div></div>
+    <div class="hstat"><div class="hstat-n">320</div><div class="hstat-l">Questões</div></div>
     <div class="hstat"><div class="hstat-n" id="score-display">0</div><div class="hstat-l">Acertos</div></div>
   </div>
 </div>
@@ -401,6 +404,7 @@
         <button class="tab" data-quiz="crianca" onclick="showSection('crianca',this)">Criança</button>
         <button class="tab" data-quiz="infeccoes" onclick="showSection('infeccoes',this)">Infecções</button>
         <button class="tab" data-quiz="cirurgico" onclick="showSection('cirurgico',this)">Cirúrgico</button>
+        <button class="tab" data-quiz="slides" onclick="showSection('slides',this)">Bloco (Slides)</button>
       </div>
     </div>
 
@@ -935,6 +939,27 @@
   <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
 </div>
 
+<!-- ══════════════════════════════════════════════════════ BLOCO CIRÚRGICO SLIDES -->
+<div id="slides" class="content section">
+
+  <div class="sticky-progress">
+    <div class="sp-title accent-slides">Questões — Bloco Cirúrgico (Slides)</div>
+    <div class="sp-bar-row bar-slides">
+      <div class="score-bar-wrap"><div class="score-bar" id="prog-bar-slides" style="width:0%"></div></div>
+      <span class="sp-prog accent-slides" id="q-prog-slides">0/50</span>
+    </div>
+    <div class="sp-stats">
+      <span class="sp-stat sp-stat-correct">Acertos: <span id="slides-correct">0</span></span>
+      <span class="sp-stat sp-stat-wrong">Erros: <span id="slides-wrong">0</span></span>
+      <span class="sp-stat sp-stat-nota">Nota: <span id="slides-nota">—</span></span>
+    </div>
+  </div>
+
+  <div id="questions-container-slides"></div>
+
+  <button class="back-top" onclick="scrollToTop()">↑ Voltar ao topo</button>
+</div>
+
 <script>
 const questions = [
   {q:"Qual a taxa nacional de mortalidade infantil do Brasil em 2024?",opts:["10,4/mil NV","11,5/mil NV","12,6/mil NV","15,7/mil NV"],a:2,exp:"A taxa nacional em 2024 é 12,6/mil NV, estagnada desde 2022. O recorde histórico mais baixo foi 11,5 em 2020."},
@@ -1048,7 +1073,7 @@ function answer(qi, oi) {
     fb.className = 'q-feedback show fail';
   }
 
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
   document.getElementById('q-prog').textContent = answered + '/50';
   document.getElementById('prog-bar').style.width = Math.round((answered/50)*100) + '%';
   document.getElementById('sae-correct').textContent = correct;
@@ -1174,7 +1199,7 @@ function answerInf(qi, oi) {
   document.getElementById('inf-correct').textContent = correct_inf;
   document.getElementById('inf-wrong').textContent = answered_inf - correct_inf;
   document.getElementById('inf-nota').textContent = answered_inf ? (correct_inf/50*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
 }
 
 const questions_banco = [
@@ -1305,7 +1330,7 @@ function answerBanco(qi, oi) {
   document.getElementById('banco-correct').textContent = correct_banco;
   document.getElementById('banco-wrong').textContent = answered_banco - correct_banco;
   document.getElementById('banco-nota').textContent = answered_banco ? (correct_banco/70*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
 }
 
 const questions_crianca = [
@@ -1411,7 +1436,7 @@ function answerCrianca(qi, oi) {
   document.getElementById('crianca-correct').textContent = correct_crianca;
   document.getElementById('crianca-wrong').textContent = answered_crianca - correct_crianca;
   document.getElementById('crianca-nota').textContent = answered_crianca ? (correct_crianca/50*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
 }
 
 const questions_cirurgico = [
@@ -1519,9 +1544,121 @@ function answerCirurgico(qi, oi) {
   document.getElementById('cirurgico-correct').textContent = correct_cirurgico;
   document.getElementById('cirurgico-wrong').textContent = answered_cirurgico - correct_cirurgico;
   document.getElementById('cirurgico-nota').textContent = answered_cirurgico ? (correct_cirurgico/50*10).toFixed(1) : '—';
-  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico;
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
 }
 
+const questions_slides = [
+  {topic:"hist",q:"Qual foi a contribuição de Florence Nightingale para a enfermagem cirúrgica?",opts:["Criou a anestesia geral com éter","Foi responsável pela limpeza dos instrumentos e da área cirúrgica, sendo considerada o marco das primeiras atividades da enfermagem de Centro Cirúrgico","Introduziu as luvas cirúrgicas em 1890","Realizou a primeira cirurgia cardíaca com circulação extracorpórea"],a:1,exp:"Florence Nightingale foi a primeira a estabelecer procedimentos regulares e padronizados. Os cirurgiões-barbeiros tinham ao lado uma pessoa responsável pela limpeza dos instrumentos e da área — primeiras atividades da enfermagem de CC."},
+  {topic:"hist",q:"Qual descoberta de 1846 revolucionou a cirurgia ao eliminar a necessidade de o paciente suportar a dor?",opts:["A introdução das luvas cirúrgicas","A descoberta dos microrganismos por Pasteur","A anestesia geral por inalação de éter","O uso de substâncias antissépticas"],a:2,exp:"Em 16 de outubro de 1846, considerado o Dia da Anestesia, foi realizada a primeira intervenção cirúrgica com anestesia geral, pela inalação do éter. Antes disso os pacientes precisavam suportar a dor e hemorragias eram estancadas com ferro e brasa."},
+  {topic:"hist",q:"Durante o período medieval, a cirurgia era praticada por:",opts:["Médicos universitários com títulos de doutor","Cirurgiões-barbeiros, que realizavam sangrias, drenagem de abscessos e amputações","Enfermeiros treinados por Florence Nightingale","Monges beneditinos especialistas em ervas medicinais"],a:1,exp:"No período medieval houve separação completa entre medicina e cirurgia. A cirurgia passou a ser exercida pelos cirurgiões-barbeiros, que realizavam sangrias, drenagem de abscessos, retirada de tumores e amputações de membros em campos de batalha."},
+  {topic:"hist",q:"O termo médico KHEIROGIA tem origem grega e significa:",opts:["Arte de curar","Trabalho manual","Corte preciso","Cuidado com a saúde"],a:1,exp:"A palavra KHEIROGIA, de origem grega, significa 'trabalho manual' e é a origem etimológica do termo cirurgia. A origem dos termos médicos na medicina grega remonta à época de Hipócrates (460–377 a.C.)."},
+  {topic:"hist",q:"A lavagem das mãos dos cirurgiões para prevenir infecções e a introdução de luvas nas cirurgias ocorreram em que século?",opts:["Século XVI","Século XVII","Século XIX (luvas em 1890)","Século XX"],a:2,exp:"A lavagem das mãos e a introdução de luvas cirúrgicas em 1890 foram marcos do século XIX que revolucionaram a assepsia cirúrgica, junto com as pesquisas de Pasteur sobre microrganismos e o uso de substâncias antissépticas."},
+  {topic:"struct",q:"O Centro Cirúrgico é dividido em três setores principais. Quais são eles?",opts:["UTI, PS e Farmácia","Centro Cirúrgico propriamente dito, Sala de Recuperação Pós-Anestésica (SRPA) e Central de Material e Esterilização (CME)","Bloco cirúrgico, centro obstétrico e pronto-socorro","Ambulatório, CC e expurgo"],a:1,exp:"O Centro Cirúrgico se divide em: Centro Cirúrgico propriamente dito (salas de operação), SRPA e CME. É considerado uma unidade complexa dentro da estrutura hospitalar."},
+  {topic:"struct",q:"A ÁREA RESTRITA do Centro Cirúrgico é caracterizada por:",opts:["Livre circulação de qualquer profissional com jaleco","Limites definidos para circulação, privativa do pessoal com indumentária cirúrgica completa, com rígido controle de trânsito e assepsia","Acesso livre a acompanhantes e visitantes","Presença de áreas administrativas e recepção"],a:1,exp:"A Área Restrita apresenta limites definidos para circulação de pessoal e equipamentos, com rotinas próprias para controle asséptico. É privativa do pessoal vestido com indumentária cirúrgica completa — salas de cirurgia, corredores internos e lavabos."},
+  {topic:"struct",q:"Qual é a localização ideal do Centro Cirúrgico dentro do hospital?",opts:["Próximo à entrada principal para acesso rápido de visitantes","Próximo à UTI e ao Pronto-Socorro, em área distante de locais de grande circulação, ruídos e poeiras","Adjacente à lavanderia e ao expurgo","No andar térreo para facilitar o transporte de equipamentos"],a:1,exp:"O CC deve estar localizado em área que ofereça segurança à técnica asséptica: distante de locais de grande circulação de pessoas, ruídos e poeiras. A localização ideal é próximo à UTI e ao Pronto-Socorro."},
+  {topic:"struct",q:"Quantos leitos de SRPA são estimados por sala cirúrgica, conforme o Ministério da Saúde (1994)?",opts:["Um leito por sala cirúrgica","Dois leitos por sala cirúrgica","Três leitos por sala cirúrgica","Quatro leitos por sala cirúrgica"],a:1,exp:"O Ministério da Saúde (1994) preconiza que de modo geral são estimados DOIS leitos por sala cirúrgica para a SRPA."},
+  {topic:"struct",q:"Quais são as três principais finalidades do Centro Cirúrgico?",opts:["Recepcionar pacientes, realizar consultas ambulatoriais e aplicar vacinas","Realizar intervenções cirúrgicas, servir de campo de estágio e ser local de pesquisa e aprimoramento de técnicas cirúrgicas","Gerenciar estoques de materiais, coordenar escalas e emitir laudos","Triagem de urgência, internação e alta hospitalar"],a:1,exp:"As principais finalidades do CC são: realizar intervenções cirúrgicas e devolver o paciente em boas condições; servir de campo de estágio para aperfeiçoamento de recursos humanos; ser local de pesquisa e aprimoramento de técnicas cirúrgicas e assépticas."},
+  {topic:"struct",q:"A área da SRPA deve ter estilo 'aberto'. Qual é o principal motivo dessa configuração?",opts:["Reduzir custos de construção","Permitir a visão e observação constante de todos os pacientes pelas equipes médica e de enfermagem","Facilitar a limpeza e desinfecção terminal da área","Permitir a circulação livre de familiares"],a:1,exp:"O estilo 'aberto' da SRPA permite a visão e observação contínua de TODOS os pacientes pelas equipes médica e de enfermagem simultaneamente — essencial num período considerado crítico para o paciente pós-cirúrgico."},
+  {topic:"class",q:"Uma apendicectomia é um exemplo de cirurgia classificada quanto à urgência como:",opts:["Eletiva","Urgência (pronta atenção em 24–48h)","Emergência (atenção imediata)","Programada de médio prazo"],a:1,exp:"Cirurgia de URGÊNCIA requer pronta atenção e deve ser realizada dentro de 24 a 48 horas. A apendicectomia é o exemplo clássico. Já a Emergência exige atenção imediata para salvar a vida (ex.: ferimento por arma de fogo na região precordial)."},
+  {topic:"class",q:"A cirurgia PALIATIVA tem como finalidade:",opts:["Remover totalmente o órgão afetado","Compensar os distúrbios para melhorar a qualidade de vida, sem curar a doença","Reconstituir artificialmente uma parte do corpo lesada","Realizar biópsia para auxiliar no diagnóstico"],a:1,exp:"A cirurgia paliativa atenua ou busca alternativa para aliviar o mal, mas não cura a doença. Exemplo clássico: Gastrostomia. Difere da curativa (remove o foco da doença) e da diagnóstica (visa o diagnóstico)."},
+  {topic:"class",q:"Quanto ao Potencial de Contaminação, qual é a classificação de uma herniorrafia realizada em condições ideais, sem penetração em vísceras ocas?",opts:["Infectada","Contaminada","Potencialmente contaminada","Limpa"],a:3,exp:"Cirurgias LIMPAS são realizadas em tecidos estéreis ou de fácil descontaminação, sem processo infeccioso, sem penetração nos tratos digestório, respiratório ou urinário. Exemplo: herniorrafia, safenectomia, mamoplastia."},
+  {topic:"class",q:"Uma colecistectomia com inflamação (sem supuração) é classificada quanto ao potencial de contaminação como:",opts:["Limpa","Potencialmente contaminada","Contaminada","Infectada"],a:2,exp:"Cirurgia CONTAMINADA inclui: feridas traumáticas recentes (< 4h), contaminação grosseira do TGI, manipulação de bile ou urina infectadas, quebras maiores de técnica e inflamação sem secreção purulenta."},
+  {topic:"class",q:"Quanto ao PORTE cirúrgico pelo tempo de duração, uma craniotomia (4–6 horas) é classificada como:",opts:["Porte I (até 2h)","Porte II (2 a 4h)","Porte III (4 a 6h)","Porte IV (acima de 6h)"],a:2,exp:"Pela classificação por tempo: Porte I até 2h (rinoplastia), Porte II de 2 a 4h (colecistectomia), Porte III de 4 a 6h (craniotomia), Porte IV acima de 6h (transplante de fígado)."},
+  {topic:"class",q:"A cirurgia de GRANDE PORTE quanto ao risco cardiológico inclui:",opts:["Herniorrafia inguinal eletiva","Colecistectomia videolaparoscópica","Cirurgias de emergência, vasculares arteriais e prótese de quadril","Rinoplastia e mamoplastia de aumento"],a:2,exp:"GRANDE PORTE: grande probabilidade de perda de fluido e sangue — cirurgias de emergência, vasculares arteriais, prótese de quadril. MÉDIO PORTE: cabeça e pescoço, herniorrafia. PEQUENO PORTE: procedimentos superficiais de baixo risco."},
+  {topic:"term",q:"Na terminologia cirúrgica, o sufixo -ECTOMIA significa:",opts:["Abertura cirúrgica de um órgão","Excisão, extirpação ou ablação","Sutura ou aproximação de bordas","Criação de uma abertura artificial"],a:1,exp:"O sufixo -ECTOMIA significa excisão, extirpação ou ablação. Exemplos: apendicECTOMIA (retirada do apêndice), mastECTOMIA (retirada da mama), histerECTOMIA (retirada do útero)."},
+  {topic:"term",q:"O prefixo LAPARO- tem origem grega e significa:",opts:["Gordura","Flanco (utilizado para cirurgias abdominais)","Lábio","Reto/ânus"],a:1,exp:"LAPARO- (grego) significa flanco e é utilizado em termos referentes a cirurgias abdominais, como LAPAROtomia (incisão no abdome) e LAPAROscopia (visualização da cavidade abdominal)."},
+  {topic:"term",q:"O sufixo -STOMIA significa:",opts:["Dissolução ou destruição","Sutura de dois planos","Abertura ou boca artificial","Exploração por imagem"],a:2,exp:"O sufixo -STOMIA significa abertura ou boca artificial. Exemplos: gastroSTOMIA, colostomia, ileostomia, traqueostomia. Diferente de -TOMIA, que significa apenas incisão."},
+  {topic:"term",q:"A terminologia NEFROPEXIA refere-se a qual procedimento?",opts:["Retirada do rim","Sutura do rim","Suspensão ou fixação do rim","Exploração visual do rim"],a:2,exp:"NEFRo (rim) + PEXIA (suspensão, fixação) = fixação cirúrgica do rim. Outros exemplos: orquiPEXIA (fixação do testículo), nefROPEXIA (fixação do rim ptótico)."},
+  {topic:"term",q:"Qual é a diferença entre os prefixos HISTER(O)- e SALPING(O)- na terminologia cirúrgica?",opts:["Ambos se referem ao ovário","HISTER(O)- refere-se ao útero; SALPING(O)- à trompa","HISTER(O)- refere-se à trompa; SALPING(O)- ao útero","HISTER(O)- refere-se à vagina; SALPING(O)- ao colo uterino"],a:1,exp:"HISTER(O)- = útero (histerECTOMIA = retirada do útero); SALPING(O)- = trompa (salpingECTOMIA = retirada da trompa). Os prefixos indicam a estrutura anatômica envolvida."},
+  {topic:"anest",q:"Qual é a definição correta de ANESTESIA vs. ANALGESIA?",opts:["São termos sinônimos sem distinção clínica","Anestesia = perda da sensibilidade dolorosa com perda da consciência; Analgesia = perda da sensibilidade dolorosa com preservação da consciência","Anestesia = sedação leve; Analgesia = sedação profunda","Anestesia é realizada por enfermeiros; Analgesia pelo médico"],a:1,exp:"ANESTESIA: perda da sensibilidade dolorosa com perda da consciência e certo grau de amnésia. ANALGESIA: perda da sensibilidade dolorosa com PRESERVAÇÃO da consciência."},
+  {topic:"anest",q:"A classificação ASA (American Society of Anesthesiologists) é utilizada para:",opts:["Padronizar as técnicas de sutura cirúrgica","Avaliar o estado físico do paciente antes da cirurgia e determinar o risco anestésico-cirúrgico","Classificar o potencial de contaminação das cirurgias","Determinar a duração máxima de cada tipo de anestesia"],a:1,exp:"A classificação ASA avalia o estado físico pré-operatório do paciente e o risco anestésico. Categorias de ASA I (saudável) a ASA VI (morte cerebral / doador de órgão)."},
+  {topic:"anest",q:"Quais são os três tipos de anestesia GERAL?",opts:["Raquidiana, Peridural e Bloqueio de plexos","Inalatória, Intravenosa e Balanceada","Local, Regional e Combinada","Tópica, Infiltrativa e Sedação"],a:1,exp:"Os três tipos de anestesia GERAL são: Inalatória (agentes voláteis inalados), Intravenosa (fármacos EV — propofol, cetamina, fentanil) e Balanceada (combinação inalatória + intravenosa)."},
+  {topic:"anest",q:"A anestesia RAQUIDIANA é realizada mediante aplicação de anestésico local em qual espaço?",opts:["Espaço peridural","Espaço subaracnoide (que contém o LCR)","Espaço subdural entre as meninges","Canal medular intramedular"],a:1,exp:"A raquianestesia é realizada no espaço SUBARACNOIDE (que contém o LCR). A punção é feita nos espaços L2-L3, L3-L4 ou L4-L5, resultando em bloqueio simpático, motor e analgesia."},
+  {topic:"anest",q:"Para quais tipos de cirurgias a raquianestesia é indicada?",opts:["Cirurgias acima da cintura, como cardíacas e torácicas","Procedimentos realizados abaixo da cicatriz umbilical: hérnias, urológicas, ginecológicas, vasculares e ortopédicas","Neurocirurgias de fossa posterior","Cirurgias de cabeça e pescoço"],a:1,exp:"A raquianestesia é indicada para procedimentos realizados abaixo da cicatriz umbilical: correções de hérnias umbilical e inguinal, cirurgias urológicas, ginecológicas, vasculares e ortopédicas."},
+  {topic:"anest",q:"Qual é a principal diferença entre anestesia PERIDURAL e RAQUIDIANA?",opts:["Não há diferença; são técnicas idênticas","A peridural aplica o anestésico no espaço peridural; a raquidiana no espaço subaracnoide","A peridural sempre usa cateter; a raquidiana nunca usa","A raquidiana é mais profunda e dura mais tempo que a peridural"],a:1,exp:"PERIDURAL: anestésico no espaço PERIDURAL (entre dura-máter e espaço subaracnoide). RAQUIDIANA: anestésico diretamente no espaço SUBARACNOIDE, no LCR. O posicionamento e local de punção são os mesmos."},
+  {topic:"anest",q:"Qual é uma possível complicação da anestesia raquidiana?",opts:["Hiperglicemia e cetoacidose diabética","Cefaleia pós-raquianestesia, retenção urinária e hematoma espinhal","Hipercalemia e arritmias ventriculares","Hepatotoxicidade aguda por acúmulo do anestésico"],a:1,exp:"As complicações da raquianestesia incluem: cefaleia pós-raqui (pela perda de LCR), retenção urinária, lesão de raízes nervosas, hematoma espinhal, meningite séptica/asséptica e hipotensão postural."},
+  {topic:"anest",q:"Na ANESTESIA LOCAL, qual é a frequência mínima de verificação dos sinais vitais recomendada?",opts:["A cada 60 minutos","A cada 30 minutos","A cada 15 minutos","Somente ao início e término do procedimento"],a:2,exp:"Na anestesia local, os sinais vitais devem ser verificados pelo menos a cada 15 minutos. A enfermagem monitora com cardioscópio, manguito não invasivo e oxímetro de pulso."},
+  {topic:"anest",q:"Quais são as três fases didáticas da anestesia GERAL?",opts:["Avaliação, indução e manutenção","Indução, manutenção e emergência (despertar)","Pré-anestesia, anestesia e pós-anestesia","Sedação leve, moderada e profunda"],a:1,exp:"As três fases da anestesia geral são: INDUÇÃO (administração dos agentes até o início da cirurgia), MANUTENÇÃO (durante o procedimento) e EMERGÊNCIA/DESPERTAR (reversão da anestesia até o retorno da consciência)."},
+  {topic:"anest",q:"A SEDAÇÃO pode ser realizada com quais fármacos?",opts:["Apenas morfina e tramadol","Propofol, midazolam e remifentanila (ou combinações)","Apenas antibióticos profiláticos","Hidrocortisona e dexametasona"],a:1,exp:"A sedação pode ser realizada com propofol, midazolam e remifentanila ou pela combinação dessas drogas. Os benzodiazepínicos (como o midazolam) são ansiolíticos, amnésicos, sedativos, relaxantes musculares e anticonvulsivantes."},
+  {topic:"anest",q:"Na avaliação pré-operatória do enfermeiro, qual dado sobre hábitos é importante investigar em relação ao risco anestésico?",opts:["Preferências alimentares do paciente","Tabagismo (risco de complicações pulmonares) e uso de álcool/drogas (risco de complicações anestésicas)","Nível de escolaridade e renda familiar","Preferências religiosas e restrições culturais"],a:1,exp:"O tabagismo aumenta riscos de complicações pulmonares (broncoespasmo, rolhas de muco). O uso de álcool e drogas aumenta riscos de complicações anestésicas. Ambos devem ser investigados na avaliação pré-operatória."},
+  {topic:"srpa",q:"Qual é a finalidade principal da Sala de Recuperação Pós-Anestésica (SRPA)?",opts:["Realizar procedimentos cirúrgicos de médio porte","Oferecer suporte ao paciente na fase de recuperação da anestesia, prevenir complicações e aliviar a dor pós-operatória","Realizar triagem de pacientes para cirurgia eletiva","Armazenar materiais e equipamentos cirúrgicos estéreis"],a:1,exp:"A SRPA: oferece suporte ao paciente na fase de recuperação da anestesia até normalização dos sinais vitais e reflexos protetores; previne/trata complicações do ato anestésico-cirúrgico; alivia a dor pós-operatória."},
+  {topic:"srpa",q:"Qual é a frequência de aferição dos sinais vitais na primeira hora de permanência na SRPA?",opts:["A cada hora","A cada 30 minutos","A cada 15 minutos","Somente na admissão e na alta"],a:2,exp:"Na SRPA, os SV devem ser aferidos a cada 15 minutos na PRIMEIRA HORA, depois a cada 30 minutos, depois a cada hora, até a estabilização do paciente."},
+  {topic:"srpa",q:"Quais são os sinais de CHOQUE que o enfermeiro deve monitorar ativamente na SRPA?",opts:["Bradicardia, hipertensão, rubor e diurese aumentada","Pulso rápido, hipotensão, palidez, cianose, baixa perfusão e queda da SatO₂","Febre, taquipneia, leucocitose e dor abdominal","Edema de membros, anasarca e oligúria"],a:1,exp:"Os sinais de choque na SRPA: pulso rápido, hipotensão, palidez, cianose, baixa perfusão periférica e queda da saturação de oxigênio. A equipe deve estar atenta para diagnóstico e intervenção precoce."},
+  {topic:"srpa",q:"Por que o paciente consciente na SRPA deve ser estimulado a respirar profundamente e tossir?",opts:["Para acelerar a eliminação dos fármacos anestésicos pela urina","Para prevenir atelectasia (colapso pulmonar parcial ou total)","Para estimular o peristaltismo intestinal e reduzir náuseas","Para verificar o retorno dos reflexos de deglutição"],a:1,exp:"Respirar profundamente e tossir previne ATELECTASIA (colapso completo ou parcial de um pulmão), complicação frequente no pós-operatório imediato devido ao posicionamento e à depressão respiratória pelos anestésicos."},
+  {topic:"srpa",q:"A escala de Aldrete-Kroulik avalia 5 parâmetros. O escore mínimo para alta da SRPA é:",opts:["5 pontos","6 pontos","8 pontos","10 pontos"],a:2,exp:"A Escala de Aldrete-Kroulik avalia: respiração, circulação, consciência, atividade motora e saturação de O₂ (0 a 2 cada, total 10). Escore de 8 a 10 indica possibilidade de alta da SRPA."},
+  {topic:"temp",q:"Quais são os quatro tempos cirúrgicos (operatórios) na sequência correta?",opts:["Anestesia, Incisão, Hemostasia e Alta","Diérese, Hemostasia, Exérese e Síntese","Incisão, Exérese, Ligadura e Sutura","Assepsia, Diérese, Síntese e Curativo"],a:1,exp:"Os quatro tempos cirúrgicos são: DIÉRESE (criação de via de acesso), HEMOSTASIA (controle de hemorragia), EXÉRESE (remoção de tecido/órgão) e SÍNTESE (sutura/aproximação para cicatrização)."},
+  {topic:"temp",q:"Qual é a função das Tesouras de METZENBAUM vs. MAYO na cirurgia?",opts:["Ambas têm a mesma indicação","Metzenbaum: diérese delicada de tecidos (menos traumática); Mayo: tecidos mais resistentes e corte de fios","Mayo: delicada para anastomoses vasculares; Metzenbaum: tecidos grosseiros","Metzenbaum: corte de osso; Mayo: corte de pele"],a:1,exp:"Tesouras de METZENBAUM: diérese delicada de tecidos, menos traumáticas. Tesouras de MAYO: rotina cirúrgica, principalmente na versão reta, para tecidos mais resistentes e corte de fios e gazes."},
+  {topic:"temp",q:"Na classificação dos cabos de bisturi, qual é a relação entre o número do cabo e o tamanho da lâmina?",opts:["Quanto maior o número, menor a lâmina","Quanto menor o número, menor a lâmina (atos delicados); números maiores = encaixe maior para lâminas maiores","O número não tem relação com o tamanho","Cabos ímpares são para cirurgias gerais; pares para especiais"],a:1,exp:"Quanto MENOR o número do cabo, menor a lâmina — destinada a atos mais delicados. Cabo nº 3 usa lâminas nº 10, 11, 12, 15; cabo nº 4 usa lâminas nº 20, 21, 22, 23, 24, 25."},
+  {topic:"temp",q:"Qual é a diferença entre as Pinças de KELLY e de CRILE?",opts:["Kelly = artérias; Crile = veias","Kelly: pontas menores, estrias parciais (vasos e fios grossos); Crile: estrias cobrindo totalmente a zona de preensão","Kelly é curva; Crile é sempre reta","São instrumentais idênticos com nomenclatura diferente"],a:1,exp:"Pinça de KELLY: pontas menores, estrias parciais, para vasos, fios grossos e pinçamento delicado. Pinça de CRILE: estrias cobrindo toda a zona de preensão, para vasos maiores."},
+  {topic:"temp",q:"O afastador de FINOCHIETTO é utilizado especificamente em qual tipo de cirurgia?",opts:["Cirurgia abdominal para afastar a parede do abdome","Cirurgia de tórax para abertura dos espaços intercostais ou medioesternal","Cirurgias pediátricas para afastamento delicado de pele","Cirurgias ortopédicas para exposição de articulações"],a:1,exp:"O Afastador de FINOCHIETTO é um afastador ESTÁTICO usado em cirurgia de TÓRAX para abertura dos espaços intercostais ou medioesternal. O Afastador de GOSSET afasta a parede abdominal."},
+  {topic:"temp",q:"Na classificação de fios de sutura por calibre, qual afirmativa está CORRETA?",opts:["Quanto maior o número (ex.: 5), mais fino o fio","Quanto maior o número acima de zero, mais grosso; quanto mais zeros (ex.: 4-0), mais fino","Os fios são classificados apenas por material","Todos os fios têm o mesmo calibre"],a:1,exp:"Numeração acima de zero: mais grosso (ex.: fio 3 — quanto maior, mais grosso). Com zeros: mais fino (ex.: 4-0 — quanto mais zeros, mais fino). A escala vai de 6-0 (muito fino) a 5 ou mais (muito grosso)."},
+  {topic:"temp",q:"Qual é a diferença entre fios de sutura ABSORVÍVEIS e INABSORVÍVEIS?",opts:["Absorvíveis causam mais reação inflamatória; inabsorvíveis são hipoalergênicos","Absorvíveis são reabsorvidos por fagocitose ou hidrólise (ex.: categut, poliglactina); inabsorvíveis permanecem nos tecidos (ex.: náilon, seda, aço)","Absorvíveis são sempre de origem natural; inabsorvíveis sempre sintéticos","Absorvíveis são usados apenas em pele; inabsorvíveis em vísceras"],a:1,exp:"ABSORVÍVEIS: reabsorvidos por fagocitose ou hidrólise — categut simples (70 dias), cromado (90 dias), poliglactina (56–70 dias). INABSORVÍVEIS: náilon, seda, polipropileno, aço inoxidável — permanecem nos tecidos."},
+  {topic:"peri",q:"O pré-operatório IMEDIATO corresponde a qual período e quais são seus principais cuidados?",opts:["Desde a indicação da cirurgia até o dia anterior; exames diagnósticos","As 24 horas anteriores à cirurgia; jejum, limpeza intestinal, esvaziamento vesical, preparo da pele e medicação pré-anestésica","A primeira semana após a alta; curativo e retirada de pontos","O dia da cirurgia após a alta da SRPA; deambulação precoce"],a:1,exp:"O pré-operatório IMEDIATO (últimas 24h) visa preparar o cliente para o ato cirúrgico: jejum, limpeza intestinal, esvaziamento vesical, preparo da pele (tricotomia) e aplicação de medicação pré-anestésica."},
+  {topic:"peri",q:"Qual é o objetivo do JEJUM pré-operatório e qual o tempo mínimo recomendado?",opts:["Evitar hiperglicemia durante a anestesia; mínimo de 2 horas","Evitar vômitos e prevenir aspiração de resíduos alimentares durante a anestesia; jejum de 6 a 12 horas","Facilitar o esvaziamento intestinal; mínimo de 24 horas","Evitar interações medicamentosas com os anestésicos; mínimo de 4 horas"],a:1,exp:"O jejum de 6 a 12 horas visa evitar vômitos e prevenir a aspiração de resíduos alimentares durante a anestesia. A aspiração pulmonar é uma das complicações anestésicas mais graves do perioperatório."},
+  {topic:"peri",q:"O CONSENTIMENTO CIRÚRGICO deve ser assinado pelo paciente. Qual é o papel do enfermeiro nesse processo?",opts:["O enfermeiro assina em nome do paciente analfabeto","Se o paciente não compreender as explicações do cirurgião, o enfermeiro notifica o cirurgião antes da assinatura","O enfermeiro explica os detalhes técnicos substituindo o cirurgião","O consentimento é desnecessário em cirurgias de urgência e emergência"],a:1,exp:"O paciente deve assinar o consentimento após explicações do CIRURGIÃO. Se o enfermeiro perceber que o paciente não compreendeu, deve NOTIFICAR O CIRURGIÃO antes da assinatura."},
+  {topic:"peri",q:"No período intraoperatório, quais são as funções de enfermagem quanto à circulação e instrumentação?",opts:["A circulante realiza suturas; a instrumentadora administra anestesia","A circulante gerencia a sala e protege o paciente; a instrumentadora auxilia diretamente o cirurgião com os instrumentais","A circulante e instrumentadora têm funções idênticas","A circulante aplica medicamentos; a instrumentadora monitora os SV"],a:1,exp:"CIRCULANTE: gerencia a sala, protege o paciente, suporte logístico — permanece FORA do campo estéril. INSTRUMENTADORA: auxilia diretamente o cirurgião, passando instrumentais e mantendo o campo estéril."},
+  {topic:"peri",q:"O posicionamento DECÚBITO VENTRAL (PRONA) é indicado para quais tipos de cirurgias?",opts:["Cirurgias cardíacas e transplantes","Cirurgias na coluna vertebral, neurocirurgias em fossa posterior, cisto pilonidal, calcâneos, vasculares e plásticas","Cirurgias ginecológicas e urológicas","Cirurgias de cabeça e pescoço com acesso anterior"],a:1,exp:"Na posição PRONA, o abdome fica em contato com a mesa. É indicada para: cirurgias na coluna vertebral, neurocirurgias em fossa posterior, cisto pilonidal, calcâneos, vasculares e plásticas."},
+  {topic:"safe",q:"O Protocolo de Cirurgia Segura da OMS foi lançado em qual ano e quando o Brasil o adotou obrigatoriamente?",opts:["2000; Brasil adotou em 2005","2008–2009; Brasil adotou obrigatoriamente em 2013","2010; Brasil adotou em 2012","2005; Brasil adotou em 2010"],a:1,exp:"O Protocolo de Cirurgia Segura foi lançado pela OMS em 2008–2009, após estudos multicêntricos que comprovaram sua eficácia. O Brasil adotou sua aplicação obrigatória em 2013."},
+  {topic:"safe",q:"A Checklist de Cirurgia Segura é dividida em 3 momentos. Qual é a sequência correta?",opts:["Admissão, Centro Cirúrgico e Alta","Sign In (Entrada), Time Out (Pausa) e Sign Out/Checkout (Saída)","Pré-anestesia, Intraoperatório e SRPA","Triagem, Cirurgia e Pós-operatório"],a:1,exp:"A Checklist tem 3 momentos: SIGN IN (antes da indução anestésica), TIME OUT (antes da incisão — pausa com toda a equipe) e SIGN OUT/CHECKOUT (antes de o paciente sair da sala)."},
+  {topic:"safe",q:"Qual é o principal objetivo do momento TIME OUT na Checklist de Cirurgia Segura?",opts:["Verificar os sinais vitais antes da alta da SRPA","Confirmar identidade correta, sítio cirúrgico e procedimento, com toda a equipe presente, antes da incisão","Realizar a contagem de instrumentais e compressas no final da cirurgia","Verificar a data de validade dos materiais estéreis"],a:1,exp:"O TIME OUT é a pausa realizada ANTES DA INCISÃO com TODA A EQUIPE presente. Confirma: identificação correta do paciente, procedimento correto, sítio correto (evitar lateralidade errada) e previne ISC e tromboses."},
+  {topic:"safe",q:"O Protocolo de Cirurgia Segura visa evitar qual tipo de erro cirúrgico?",opts:["Erros de dosagem de antibióticos profiláticos apenas","Erros de lateralidade, sítio e procedimento errados, além de prevenção de ISC, tromboses e reações alérgicas","Erros de comunicação entre cirurgião e paciente após a alta","Erros no preenchimento de formulários administrativos"],a:1,exp:"O Protocolo previne: erros de identificação do paciente, erros de lateralidade (operar o lado errado), sítio errado, procedimento errado, além de ISC, tromboses e reações alérgicas não identificadas previamente."},
+  {topic:"safe",q:"O Protocolo de Cirurgia Segura reduziu comprovadamente qual desfecho clínico nos hospitais que o adotaram?",opts:["Apenas o tempo de internação sem impacto na mortalidade","Complicações cirúrgicas e mortalidade perioperatória","Exclusivamente o custo hospitalar com materiais","Apenas os casos de infecção do sítio cirúrgico"],a:1,exp:"Os estudos multicêntricos (OMS, 2008–2009) comprovaram que a adoção do protocolo reduziu significativamente COMPLICAÇÕES CIRÚRGICAS e MORTALIDADE perioperatória — principal justificativa para sua adoção obrigatória no Brasil em 2013."}
+];
+
+const topicLabelSlides = {hist:'Histórico do CC', struct:'Estrutura do CC', class:'Classificação Cirúrgica', term:'Terminologia Cirúrgica', anest:'Anestesia', srpa:'SRPA', temp:'Tempos e Instrumentais', peri:'Perioperatório', safe:'Cirurgia Segura'};
+let answered_slides = 0;
+let correct_slides = 0;
+const questions_slides_shuffled = shuffleArray(questions_slides);
+
+function buildQuestionsSlides() {
+  const c = document.getElementById('questions-container-slides');
+  questions_slides_shuffled.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'qsl-' + i;
+    const letters = ['A','B','C','D'];
+    div.innerHTML = `
+      <div class="q-num">Questão ${i+1} / 50 &mdash; <span style="color:var(--muted);font-weight:400">${topicLabelSlides[q.topic]||q.topic}</span></div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j) => `<button class="q-opt" onclick="answerSlides(${i},${j})" id="optsl-${i}-${j}"><span class="opt-letter">${letters[j]}</span>${o}</button>`).join('')}
+      </div>
+      <div class="q-feedback" id="fbsl-${i}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function answerSlides(qi, oi) {
+  const q = questions_slides_shuffled[qi];
+  const block = document.getElementById('qsl-' + qi);
+  if (block.classList.contains('answered')) return;
+  block.classList.add('answered');
+  answered_slides++;
+  const opts = block.querySelectorAll('.q-opt');
+  opts.forEach((o, j) => {
+    o.style.pointerEvents = 'none';
+    if (j === q.a) o.classList.add('correct');
+    else if (j === oi && oi !== q.a) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('fbsl-' + qi);
+  if (oi === q.a) {
+    correct_slides++;
+    fb.textContent = 'Correto! ' + q.exp;
+    fb.className = 'q-feedback show ok';
+  } else {
+    fb.textContent = 'Incorreto. ' + q.exp;
+    fb.className = 'q-feedback show fail';
+  }
+  document.getElementById('q-prog-slides').textContent = answered_slides + '/50';
+  document.getElementById('prog-bar-slides').style.width = Math.round((answered_slides/50)*100) + '%';
+  document.getElementById('slides-correct').textContent = correct_slides;
+  document.getElementById('slides-wrong').textContent = answered_slides - correct_slides;
+  document.getElementById('slides-nota').textContent = answered_slides ? (correct_slides/50*10).toFixed(1) : '—';
+  document.getElementById('score-display').textContent = correct + correct_inf + correct_banco + correct_crianca + correct_cirurgico + correct_slides;
+}
+
+buildQuestionsSlides();
 buildQuestionsCirurgico();
 buildQuestionsCrianca();
 buildQuestionsBanco();
